@@ -1,0 +1,36 @@
+{
+	"name": "ecma-proposal-promise-finally",
+	"version": "0.0.0",
+	"description": "ECMAScript spec proposal for Promise#finally",
+	"scripts": {
+		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -t > index.html",
+		"prepublish": "npm run build && echo >&2 'no publishing' && exit 255"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ljharb/proposal-promise-finally.git"
+	},
+	"keywords": [
+		"promise",
+		"finally",
+		"then",
+		"thenable",
+		"promises",
+		"async",
+		"ECMAScript",
+		"ESNext",
+		"spec",
+		"proposal"
+	],
+	"author": "Jordan Harband <ljharb@gmail.com>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/ljharb/proposal-promise-finally/issues"
+	},
+	"homepage": "https://github.com/ljharb/proposal-promise-finally#readme",
+	"dependencies": {},
+	"devDependencies": {
+		"ecmarkup": "^2.8.1",
+		"js-beautify": "^1.5.10"
+	}
+}
