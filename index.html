@@ -368,44 +368,45 @@
 					<ol>
 						<li>If <var>type</var> is <code>"Fulfill"</code>, let <var>handlerResult</var> be
 							<emu-xref aoid="NormalCompletion"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-normalcompletion">NormalCompletion</a></emu-xref>(<var>argument</var>).</li>
-						<li>Else if <var>type</var> is <code>"Reject"</code>, let <var>handlerResult</var> be
+						<li>If <var>type</var> is <code>"Reject"</code>, let <var>handlerResult</var> be
 							<emu-xref aoid="Completion"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-completion-record-specification-type">Completion</a></emu-xref>{[[Type]]:
 							<emu-const>throw</emu-const>, [[Value]]: <var>argument</var>, [[Target]]:
 							<emu-const>empty</emu-const>}.</li>
-						<li>Else if <var>type</var> is <code>"Finally"</code>, let <var>handlerResult</var> be
+						<li>If <var>type</var> is <code>"Finally"</code>, let <var>handlerResult</var> be
 							<emu-xref aoid="NormalCompletion"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-normalcompletion">NormalCompletion</a></emu-xref>(<var>argument</var>).</li>
-						<li>Assert: <var>handlerResult</var> is defined.</li>
-					</ol>
-				</li>
-				<li>Else if <var>type</var> is <code>"Finally"</code>, let <var>handlerResult</var> be
-					<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>handler</var>,
-					<emu-val>undefined</emu-val>, « »).</li>
-				<li>Else, let <var>handlerResult</var> be
-					<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>handler</var>,
-					<emu-val>undefined</emu-val>, « <var>argument</var> »).</li>
-				<li>If <var>handlerResult</var> is an
-					<emu-xref href="#sec-completion-record-specification-type"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, then
-					<ol>
-						<li>Let <var>status</var> be
-							<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Reject]],
-							<emu-val>undefined</emu-val>, « <var>handlerResult</var>.[[Value]] »).</li>
 					</ol>
 				</li>
 				<li>Else,
 					<ol>
-						<li>Let <var>status</var> be
+						<li>If <var>type</var> is <code>"Fulfill"</code> or <code>"Reject"</code>, let <var>handlerResult</var> be
+							<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>handler</var>,
+							<emu-val>undefined</emu-val>, « <var>argument</var> »).</li>
+						<li>If <var>type</var> is <code>"Finally"</code>, let <var>handlerResult</var> be
+							<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>handler</var>,
+							<emu-val>undefined</emu-val>, « »).</li>
+					</ol>
+				</li>
+				<li>If <var>handlerResult</var> is an
+					<emu-xref href="#sec-completion-record-specification-type"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, then let <var>status</var> be
+					<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Reject]],
+					<emu-val>undefined</emu-val>, « <var>handlerResult</var>.[[Value]] »).</li>
+				<li>Else,
+					<ol>
+						<li>If <var>type</var> is <code>"Fulfill"</code> or <code>"Reject"</code>, return
 							<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]],
 							<emu-val>undefined</emu-val>, « <var>handlerResult</var>.[[Value]] »).</li>
-						<li>If <var>type</var> is <code>"Finally"</code> and <var>status</var> is a normal completion, then
+						<li>If <var>type</var> is <code>"Finally"</code>,
 							<ol>
-								<li>Return
-									<emu-xref aoid="NormalCompletion"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-normalcompletion">NormalCompletion</a></emu-xref>(<var>handlerResult</var>.[[Value]]).</li>
+								<li>If XXX TODO this algorithm was called by chaining off a fulfilled promise XXX TODO return
+									<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]],
+									<emu-val>undefined</emu-val>, « <var>argument</var> »).</li>
+								<li>If XXX TODO this algorithm was called by chaining off a rejected promise XXX TODO return
+									<emu-xref aoid="Call"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Reject]],
+									<emu-val>undefined</emu-val>, « <var>argument</var> »).
+								</li>
 							</ol>
 						</li>
 					</ol>
-				</li>
-				<li>Return
-					<emu-xref aoid="Completion"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-completion-record-specification-type">Completion</a></emu-xref>(<var>status</var>).
 				</li>
 			</ol>
 		</emu-alg>
