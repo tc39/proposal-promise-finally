@@ -13,7 +13,7 @@ if (typeof Promise.prototype.finally !== 'function') {
 		var C = speciesConstructor(this, Promise);
 		return this.then(
 			x => C.resolve(onFinally()).then(() => x),
-			e => C.resolve(onFinally()).then(() => throw e)
+			e => C.resolve(onFinally()).then(() => { throw e; })
 		});
 	});
 }
