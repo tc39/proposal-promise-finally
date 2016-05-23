@@ -8,12 +8,15 @@ if (typeof Promise.prototype.finally !== 'function') {
 		var S = C[Symbol.species];
 		return S == null ?  defaultConstructor : S;
 	};
-	Promise.prototype.finally = function finally(onFinally) {
-		var handler = typeof onFinally === 'function' ? onFinally : () => {};
-		var C = speciesConstructor(this, Promise);
-		return this.then(
-			x => C.resolve(onFinally()).then(() => x),
-			e => C.resolve(onFinally()).then(() => { throw e; })
-		});
-	});
+	var shim = {
+		finally(onFinally) {
+			var handler = typeof onFinally === 'function' ? onFinally : () => {};
+			var C = speciesConstructor(this, Promise);
+			return this.then(
+				x => C.resolve(onFinally()).then(() => x),
+				e => C.resolve(onFinally()).then(() => { throw e; })
+			});
+		}
+	};
+	Promise.prototype.finally = shim.finally;
 }
