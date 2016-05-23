@@ -15,7 +15,7 @@ if (typeof Promise.prototype.finally !== 'function') {
 			return this.then(
 				x => C.resolve(onFinally()).then(() => x),
 				e => C.resolve(onFinally()).then(() => { throw e; })
-			});
+			);
 		}
 	};
 	Promise.prototype.finally = shim.finally;
