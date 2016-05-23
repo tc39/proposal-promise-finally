@@ -151,17 +151,16 @@ contributors: Jordan Harband
 		1. Let _handler_ be _reaction_.[[Handler]].
 		1. If _handler_ is *undefined*, then
 			1. If _type_ is `"Fulfill"`, let _handlerResult_ be NormalCompletion(_argument_).
-			1. Else if _type_ is `"Reject"`, let _handlerResult_ be Completion{[[Type]]: ~throw~, [[Value]]: _argument_, [[Target]]: ~empty~}.
-			1. Else if _type_ is `"Finally"`, let _handlerResult_ be NormalCompletion(_argument_).
-			1. Assert: _handlerResult_ is defined.
-		1. Else if _type_ is `"Finally"`, let _handlerResult_ be Call(_handler_, *undefined*, &laquo; &raquo;).
-		1. Else, let _handlerResult_ be Call(_handler_, *undefined*, &laquo; _argument_ &raquo;).
-		1. If _handlerResult_ is an abrupt completion, then
-			1. Let _status_ be Call(_promiseCapability_.[[Reject]], *undefined*, &laquo; _handlerResult_.[[Value]] &raquo;).
+			1. If _type_ is `"Reject"`, let _handlerResult_ be Completion{[[Type]]: ~throw~, [[Value]]: _argument_, [[Target]]: ~empty~}.
+			1. If _type_ is `"Finally"`, let _handlerResult_ be NormalCompletion(_argument_).
 		1. Else,
-			1. Let _status_ be Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _handlerResult_.[[Value]] &raquo;).
-			1. If _type_ is `"Finally"` and _status_ is a normal completion, then
-				1. Return NormalCompletion(_handlerResult_.[[Value]]).
-		1. Return Completion(_status_).
+			1. If _type_ is `"Fulfill"` or `"Reject"`, let _handlerResult_ be Call(_handler_, *undefined*, &laquo; _argument_ &raquo;).
+			1. If _type_ is `"Finally"`, let _handlerResult_ be Call(_handler_, *undefined*, &laquo; &raquo;).
+		1. If _handlerResult_ is an abrupt completion, then let _status_ be Call(_promiseCapability_.[[Reject]], *undefined*, &laquo; _handlerResult_.[[Value]] &raquo;).
+		1. Else,
+			1. If _type_ is `"Fulfill"` or `"Reject"`, return Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _handlerResult_.[[Value]] &raquo;).
+			1. If _type_ is `"Finally"`,
+				1. If XXX TODO this algorithm was called by chaining off a fulfilled promise XXX TODO return Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _argument_ &raquo;).
+				1. If XXX TODO this algorithm was called by chaining off a rejected promise XXX TODO return Call(_promiseCapability_.[[Reject]], *undefined*, &laquo; _argument_ &raquo;).
 	</emu-alg>
 </emu-clause>
