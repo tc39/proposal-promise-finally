@@ -13,8 +13,8 @@ if (typeof Promise.prototype.finally !== 'function') {
 			var handler = typeof onFinally === 'function' ? onFinally : () => {};
 			var C = speciesConstructor(this, Promise);
 			return this.then(
-				x => C.resolve(onFinally()).then(() => x),
-				e => C.resolve(onFinally()).then(() => { throw e; })
+				x => C.resolve(handler()).then(() => x),
+				e => C.resolve(handler()).then(() => { throw e; })
 			);
 		}
 	};
