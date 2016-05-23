@@ -15,7 +15,7 @@ Many promise libraries have a "finally" method, for registering a callback to be
  - Unlike `Promise.resolve(2).then(() => {}, () => {})` (which will be resolved with `undefined`), `Promise.resolve(2).finally(() => {})` will be resolved with `2`.
  - Similarly, unlike `Promise.reject(3).then(() => {}, () => {})` (which will be resolved with `undefined`), `Promise.reject(3).finally(() => {})` will be rejected with `3`.
 
-However, please note: just like a syntactic `finally`, a non-undefined `return` in the `finally` callback will resolve the new promise to that value, and a `throw` (or returning a rejected promise) in the `finally` callback will reject the new promise with that rejection reason.
+However, please note: a `throw` (or returning a rejected promise) in the `finally` callback will reject the new promise with that rejection reason.
 
 ## Naming
 The reasons to stick with `finally` are straightforward: just like `catch`, `finally` would be an analog to the similarly-named syntactic forms from `try`/`catch`/`finally` (`try`, of course, not really having an analog any closer than `Promise.resolve().then`). Just like syntactic `finally`, `Promise#finally` would not be able to modify the return value, except by creating an abrupt completion by throwing an exception (ie, rejecting the promise).
