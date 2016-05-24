@@ -435,9 +435,28 @@
 						<li>Assert: <var>handlerResult</var> is defined.</li>
 					</ol>
 				</li>
-				<li>Else if <var>type</var> is <code>"Finally"</code>, let <var>handlerResult</var> be
-					<emu-xref aoid="Call"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>handler</var>,
-					<emu-val>undefined</emu-val>, « »).</li>
+				<li>Else if <var>type</var> is <code>"Finally"</code>, then
+					<ol>
+						<li>let <var>handlerResult</var> be
+							<emu-xref aoid="Call"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>handler</var>,
+							<emu-val>undefined</emu-val>, « »).</li>
+						<li>If <var>handlerResult</var> is not an
+							<emu-xref href="#sec-completion-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-completion-record-specification-type">abrupt completion</a></emu-xref>, then
+							<ol>
+								<li>Let <var>handlerPromise</var> be ?
+									<emu-xref aoid="PromiseResolve"><a href="#sec-promise-resolve">PromiseResolve</a></emu-xref>(
+									<emu-xref href="#sec-promise-constructor"><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">%Promise%</a></emu-xref>, <var>handlerResult</var>.[[Value]]).</li>
+								<li>Let <var>argumentThunk</var> be equivalent to a function that returns <var>argument</var>.</li>
+								<li>Let <var>finalCapability</var> be ?
+									<emu-xref aoid="NewPromiseCapability"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(
+									<emu-xref href="#sec-promise-constructor"><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">%Promise%</a></emu-xref>).</li>
+								<li>Return ?
+									<emu-xref aoid="PerformPromiseThen"><a href="#sec-performpromisethen">PerformPromiseThen</a></emu-xref>(<var>handlerPromise</var>, <var>argumentThunk</var>,
+									<emu-val>undefined</emu-val>, <var>finalCapability</var>).</li>
+							</ol>
+						</li>
+					</ol>
+				</li>
 				<li>Else, let <var>handlerResult</var> be
 					<emu-xref aoid="Call"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>handler</var>,
 					<emu-val>undefined</emu-val>, « <var>argument</var> »).</li>
@@ -454,12 +473,6 @@
 						<li>Let <var>status</var> be
 							<emu-xref aoid="Call"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]],
 							<emu-val>undefined</emu-val>, « <var>handlerResult</var>.[[Value]] »).</li>
-						<li>If <var>type</var> is <code>"Finally"</code> and <var>status</var> is a normal completion, then
-							<ol>
-								<li>Return
-									<emu-xref aoid="NormalCompletion"><a href="https://tc39.github.io/ecma262/#sec-normalcompletion">NormalCompletion</a></emu-xref>(<var>handlerResult</var>.[[Value]]).</li>
-							</ol>
-						</li>
 					</ol>
 				</li>
 				<li>Return

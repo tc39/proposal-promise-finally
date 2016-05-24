@@ -111,11 +111,16 @@ The job PromiseReactionJob with parameters _reaction_ and _argument_ applies the
     1. Else if _type_ is `"Finally"`, let _handlerResult_ be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-normalcompletion">NormalCompletion</a>(_argument_).
     1. Assert: _handlerResult_ is defined.
   1. Else if _type_ is `"Finally"`, let _handlerResult_ be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a>(_handler_, **undefined**, &laquo; &raquo;).
+  1. Else if _type_ is `"Finally"`, then
+    1. let _handlerResult_ be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a>(_handler_, *undefined*, &laquo; &raquo;).
+    1. If _handlerResult_ is not an abrupt completion, then
+      1. Let _handlerPromise_ be ? PromiseResolve(%Promise%, _handlerResult_.[[Value]]).
+      1. Let _argumentThunk_ be equivalent to a function that returns _argument_.
+      1. Let _finalCapability_ be ? <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-newpromisecapability">NewPromiseCapability</a>(%Promise%).
+      1. Return ? PerformPromiseThen(_handlerPromise_, _argumentThunk_, *undefined*, _finalCapability_).
   1. Else, let _handlerResult_ be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a>(_handler_, **undefined**, &laquo; _argument_ &raquo;).
   1. If _handlerResult_ is an <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-completion-record-specification-type">abrupt completion</a>, then
     1. Let _status_ be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a>(_promiseCapability_.[[Reject]], **undefined**, &laquo; _handlerResult_.[[Value]] &raquo;).
   1. Else,
     1. Let _status_ be <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-call">Call</a>(_promiseCapability_.[[Resolve]], **undefined**, &laquo; _handlerResult_.[[Value]] &raquo;).
-    1. If _type_ is `"Finally"` and _status_ is a normal completion, then
-      1. Return <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-normalcompletion">NormalCompletion</a>(_handlerResult_.[[Value]]).
   1. Return <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-completion-record-specification-type">Completion</a>(_status_).
