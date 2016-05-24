@@ -71,6 +71,30 @@
 			"location": "",
 			"key": "EnqueuePromiseReactions ( _promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_ )"
 		}, {
+			"type": "clause",
+			"id": "sec-promise.resolve",
+			"aoid": null,
+			"title": "Promise.resolve ( _x_ )",
+			"number": "6",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "Promise.resolve ( _x_ )"
+		}, {
+			"type": "op",
+			"aoid": "PromiseResolve",
+			"refId": "sec-promise-resolve",
+			"location": "",
+			"key": "PromiseResolve"
+		}, {
+			"type": "clause",
+			"id": "sec-promise-resolve",
+			"aoid": "PromiseResolve",
+			"title": "PromiseResolve ( _C_, _x_ )",
+			"number": "7",
+			"namespace": "<no location>",
+			"location": "",
+			"key": "PromiseResolve ( _C_, _x_ )"
+		}, {
 			"type": "op",
 			"aoid": "PromiseReactionJob",
 			"refId": "sec-promisereactionjob",
@@ -81,7 +105,7 @@
 			"id": "sec-promisereactionjob",
 			"aoid": "PromiseReactionJob",
 			"title": "PromiseReactionJob ( _reaction_, _argument_ )",
-			"number": "6",
+			"number": "8",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "PromiseReactionJob ( _reaction_, _argument_ )"
@@ -119,7 +143,9 @@
 				<li><span class="item-toggle-none"></span><a href="#sec-performpromisefinally" title="PerformPromiseFinally ( _promise_, _onFinally_, _resultCapability_ )"><span class="secnum">3</span> PerformPromiseFinally ( <var>promise</var>, <var>onFinally</var>, <var>resultCapability</var> )</a></li>
 				<li><span class="item-toggle-none"></span><a href="#sec-performpromisethen" title="PerformPromiseThen ( _promise_, _onFulfilled_, _onRejected_, _resultCapability_ )"><span class="secnum">4</span> PerformPromiseThen ( <var>promise</var>, <var>onFulfilled</var>, <var>onRejected</var>, <var>resultCapability</var> )</a></li>
 				<li><span class="item-toggle-none"></span><a href="#sec-enqueuepromisereactions" title="EnqueuePromiseReactions ( _promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_ )"><span class="secnum">5</span> EnqueuePromiseReactions ( <var>promise</var>, <var>fulfillReaction</var>, <var>rejectReaction</var>, <var>resultCapability</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-promisereactionjob" title="PromiseReactionJob ( _reaction_, _argument_ )"><span class="secnum">6</span> PromiseReactionJob ( <var>reaction</var>, <var>argument</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-promise.resolve" title="Promise.resolve ( _x_ )"><span class="secnum">6</span> Promise.resolve ( <var>x</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-promise-resolve" title="PromiseResolve ( _C_, _x_ )"><span class="secnum">7</span> PromiseResolve ( <var>C</var>, <var>x</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-promisereactionjob" title="PromiseReactionJob ( _reaction_, _argument_ )"><span class="secnum">8</span> PromiseReactionJob ( <var>reaction</var>, <var>argument</var> )</a></li>
 				<li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li>
 			</ol>
 		</div>
@@ -330,9 +356,63 @@
 		</emu-alg>
 	</emu-clause>
 
+	<!-- es6num="25.4.1.8" -->
+	<emu-clause id="sec-promise.resolve">
+		<h1><span class="secnum">6</span>Promise.resolve ( <var>x</var> )<span class="utils"><span class="anchor"><a href="#sec-promise.resolve">#</a></span></span></h1>
+		<p>The <code>resolve</code> function returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
+		<emu-alg>
+			<ol>
+				<li>Let <var>C</var> be the
+					<emu-val>this</emu-val> value.</li>
+				<li>If
+					<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>C</var>) is not Object, throw a
+					<emu-val>TypeError</emu-val> exception.</li>
+				<li>Return ?
+					<emu-xref aoid="PromiseResolve"><a href="#sec-promise-resolve">PromiseResolve</a></emu-xref>(<var>C</var>, <var>x</var>).
+				</li>
+			</ol>
+		</emu-alg>
+		<emu-note><span class="note">Note</span>
+			<p>The <code>resolve</code> function expects its
+				<emu-val>this</emu-val> value to be a constructor function that supports the parameter conventions of the <code>Promise</code> constructor.</p>
+		</emu-note>
+	</emu-clause>
+
+	<emu-clause id="sec-promise-resolve" aoid="PromiseResolve">
+		<h1><span class="secnum">7</span>PromiseResolve ( <var>C</var>, <var>x</var> )<span class="utils"><span class="anchor"><a href="#sec-promise-resolve">#</a></span></span></h1>
+		<p>The abstract operation PromiseResolve, given a constructor and a value, returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
+		<emu-alg>
+			<ol>
+				<li>Assert:
+					<emu-xref aoid="Type"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>C</var>) is Object.</li>
+				<li>If
+					<emu-xref aoid="IsPromise"><a href="https://tc39.github.io/ecma262/#sec-ispromise">IsPromise</a></emu-xref>(<var>x</var>) is
+					<emu-val>true</emu-val>, then
+					<ol>
+						<li>Let <var>xConstructor</var> be ?
+							<emu-xref aoid="Get"><a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a></emu-xref>(<var>x</var>, <code>"constructor"</code>).</li>
+						<li>If
+							<emu-xref aoid="SameValue"><a href="https://tc39.github.io/ecma262/#sec-samevalue">SameValue</a></emu-xref>(<var>xConstructor</var>, <var>C</var>) is
+							<emu-val>true</emu-val>, return <var>x</var>.</li>
+					</ol>
+				</li>
+				<li>Let <var>promiseCapability</var> be ?
+					<emu-xref aoid="NewPromiseCapability"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(<var>C</var>).
+					<ol>
+						<li>Perform ?
+							<emu-xref aoid="Call"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]],
+							<emu-val>undefined</emu-val>, « <var>x</var> »).</li>
+					</ol>
+				</li>
+				<li>Return <var>promiseCapability</var>.[[Promise]].
+				</li>
+			</ol>
+		</emu-alg>
+	</emu-clause>
+
 	<!-- es6num="25.4.2.1" -->
 	<emu-clause id="sec-promisereactionjob" aoid="PromiseReactionJob">
-		<h1><span class="secnum">6</span>PromiseReactionJob ( <var>reaction</var>, <var>argument</var> )<span class="utils"><span class="anchor"><a href="#sec-promisereactionjob">#</a></span></span></h1>
+		<h1><span class="secnum">8</span>PromiseReactionJob ( <var>reaction</var>, <var>argument</var> )<span class="utils"><span class="anchor"><a href="#sec-promisereactionjob">#</a></span></span></h1>
 		<p>The job PromiseReactionJob with parameters <var>reaction</var> and <var>argument</var> applies the appropriate handler to the incoming value, and uses the handler's return value to resolve or reject the derived promise associated with that handler.</p>
 		<emu-alg>
 			<ol>

@@ -128,6 +128,34 @@ contributors: Jordan Harband
 	</emu-alg>
 </emu-clause>
 
+<!-- es6num="25.4.1.8" -->
+<emu-clause id="sec-promise.resolve">
+	<h1>Promise.resolve ( _x_ )</h1>
+	<p>The `resolve` function returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
+	<emu-alg>
+		1. Let _C_ be the *this* value.
+		1. If Type(_C_) is not Object, throw a *TypeError* exception.
+		1. Return ? PromiseResolve(_C_, _x_).
+	</emu-alg>
+	<emu-note>
+		<p>The `resolve` function expects its *this* value to be a constructor function that supports the parameter conventions of the `Promise` constructor.</p>
+	</emu-note>
+</emu-clause>
+
+<emu-clause id="sec-promise-resolve" aoid="PromiseResolve">
+	<h1>PromiseResolve ( _C_, _x_ )</h1>
+	<p>The abstract operation PromiseResolve, given a constructor and a value, returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
+	<emu-alg>
+		1. Assert: Type(_C_) is Object.
+		1. If IsPromise(_x_) is *true*, then
+			1. Let _xConstructor_ be ? Get(_x_, `"constructor"`).
+			1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
+		1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
+			1. Perform ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _x_ &raquo;).
+		1. Return _promiseCapability_.[[Promise]].
+	</emu-alg>
+</emu-clause>
+
 <!-- es6num="25.4.2.1" -->
 <emu-clause id="sec-promisereactionjob" aoid="PromiseReactionJob">
 	<h1>PromiseReactionJob ( _reaction_, _argument_ )</h1>
