@@ -44,19 +44,12 @@
 					"title": "EnqueuePromiseReactions ( _promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_ )",
 					"number": "5"
 				},
-				"sec-triggerpromisereactions": {
-					"location": "",
-					"id": "sec-triggerpromisereactions",
-					"aoid": "TriggerPromiseReactions",
-					"title": "TriggerPromiseReactions ( _reactions_, _argument_ )",
-					"number": "6"
-				},
 				"sec-promisereactionjob": {
 					"location": "",
 					"id": "sec-promisereactionjob",
 					"aoid": "PromiseReactionJob",
 					"title": "PromiseReactionJob ( _reaction_, _argument_ )",
-					"number": "7"
+					"number": "6"
 				},
 				"sec-copyright-and-software-license": {
 					"location": "",
@@ -80,11 +73,6 @@
 				"EnqueuePromiseReactions": {
 					"aoid": "EnqueuePromiseReactions",
 					"id": "sec-enqueuepromisereactions",
-					"location": ""
-				},
-				"TriggerPromiseReactions": {
-					"aoid": "TriggerPromiseReactions",
-					"id": "sec-triggerpromisereactions",
 					"location": ""
 				},
 				"PromiseReactionJob": {
@@ -122,13 +110,12 @@
 				<li><span class="item-toggle-none"></span><a href="#sec-performpromisefinally" title="PerformPromiseFinally ( _promise_, _onFinally_, _resultCapability_ )"><span class="secnum">3</span> PerformPromiseFinally ( <var>promise</var>, <var>onFinally</var>, <var>resultCapability</var> )</a></li>
 				<li><span class="item-toggle-none"></span><a href="#sec-performpromisethen" title="PerformPromiseThen ( _promise_, _onFulfilled_, _onRejected_, _resultCapability_ )"><span class="secnum">4</span> PerformPromiseThen ( <var>promise</var>, <var>onFulfilled</var>, <var>onRejected</var>, <var>resultCapability</var> )</a></li>
 				<li><span class="item-toggle-none"></span><a href="#sec-enqueuepromisereactions" title="EnqueuePromiseReactions ( _promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_ )"><span class="secnum">5</span> EnqueuePromiseReactions ( <var>promise</var>, <var>fulfillReaction</var>, <var>rejectReaction</var>, <var>resultCapability</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-triggerpromisereactions" title="TriggerPromiseReactions ( _reactions_, _argument_ )"><span class="secnum">6</span> TriggerPromiseReactions ( <var>reactions</var>, <var>argument</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-promisereactionjob" title="PromiseReactionJob ( _reaction_, _argument_ )"><span class="secnum">7</span> PromiseReactionJob ( <var>reaction</var>, <var>argument</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-promisereactionjob" title="PromiseReactionJob ( _reaction_, _argument_ )"><span class="secnum">6</span> PromiseReactionJob ( <var>reaction</var>, <var>argument</var> )</a></li>
 				<li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li>
 			</ol>
 		</div>
 	</div>
-	<h1 class="version">Stage 0 Draft / May 17, 2016</h1>
+	<h1 class="version">Stage 0 Draft / June 2, 2016</h1>
 	<h1 class="title">Promise.prototype.finally</h1>
 
 	<emu-clause id="sec-promise.prototype.finally">
@@ -155,11 +142,7 @@
 
 	<emu-clause id="sec-promisereaction-records">
 		<h1><span class="secnum">2</span>PromiseReaction Records<span class="utils"><span class="anchor"><a href="#sec-promisereaction-records">#</a></span></span></h1>
-		<p>The PromiseReaction is a Record value used to store information about how a promise should react when it becomes resolved or rejected with a given value. PromiseReaction records are created by the
-			<emu-xref aoid="PerformPromiseThen"><a href="#sec-performpromisethen">PerformPromiseThen</a></emu-xref> abstract operation, and are used by a
-			<emu-xref aoid="PromiseReactionJob"><a href="#sec-promisereactionjob">PromiseReactionJob</a></emu-xref>.</p>
-		<p>PromiseReaction records have the fields listed in
-			<emu-xref href="#table-58"><a href="#table-58">Table 1</a></emu-xref>.</p>
+		<p>…</p>
 		<emu-table id="table-58" caption="PromiseReaction Record Fields">
 			<figure>
 				<figcaption>Table 1: PromiseReaction Record Fields</figcaption>
@@ -181,15 +164,15 @@
 						</tr>
 						<tr>
 							<td>
-								[[Capabilities]]
+								…
 
 							</td>
 							<td>
-								A PromiseCapability record
+								…
 
 							</td>
 							<td>
-								The capabilities of the promise for which this record provides a reaction handler.
+								…
 
 							</td>
 						</tr>
@@ -207,17 +190,15 @@
 						</tr>
 						<tr>
 							<td>
-								[[Handler]]
+								…
 
 							</td>
 							<td>
-								A function object or
-								<emu-val>undefined</emu-val>
+								…
 
 							</td>
 							<td>
-								The function that should be applied to the incoming value, and whose return value will govern what happens to the derived promise. If [[Handler]] is
-								<emu-val>undefined</emu-val>, a function that depends on the value of [[Type]] will be used instead.
+								…
 
 							</td>
 						</tr>
@@ -332,30 +313,9 @@
 		</emu-alg>
 	</emu-clause>
 
-	<!-- es6num="25.4.1.8" -->
-	<emu-clause id="sec-triggerpromisereactions" aoid="TriggerPromiseReactions">
-		<h1><span class="secnum">6</span>TriggerPromiseReactions ( <var>reactions</var>, <var>argument</var> )<span class="utils"><span class="anchor"><a href="#sec-triggerpromisereactions">#</a></span></span></h1>
-		<p>The abstract operation TriggerPromiseReactions takes a collection of PromiseReactionRecords and enqueues a new Job for each record. Each such Job processes the [[Type]] and [[Handler]] of the PromiseReactionRecord, and if the [[Handler]] is a function, calls it passing the given argument. If the [[Handler]] is
-			<emu-val>undefined</emu-val>, the behavior is determined by the [[Type]].</p>
-		<emu-alg>
-			<ol>
-				<li>Repeat for each <var>reaction</var> in <var>reactions</var>, in original insertion order
-					<ol>
-						<li>Perform
-							<emu-xref aoid="EnqueueJob"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-enqueuejob">EnqueueJob</a></emu-xref>(<code>"PromiseJobs"</code>,
-							<emu-xref aoid="PromiseReactionJob"><a href="#sec-promisereactionjob">PromiseReactionJob</a></emu-xref>, « <var>reaction</var>, <var>argument</var> »).</li>
-					</ol>
-				</li>
-				<li>Return
-					<emu-val>undefined</emu-val>.
-				</li>
-			</ol>
-		</emu-alg>
-	</emu-clause>
-
 	<!-- es6num="25.4.2.1" -->
 	<emu-clause id="sec-promisereactionjob" aoid="PromiseReactionJob">
-		<h1><span class="secnum">7</span>PromiseReactionJob ( <var>reaction</var>, <var>argument</var> )<span class="utils"><span class="anchor"><a href="#sec-promisereactionjob">#</a></span></span></h1>
+		<h1><span class="secnum">6</span>PromiseReactionJob ( <var>reaction</var>, <var>argument</var> )<span class="utils"><span class="anchor"><a href="#sec-promisereactionjob">#</a></span></span></h1>
 		<p>The job PromiseReactionJob with parameters <var>reaction</var> and <var>argument</var> applies the appropriate handler to the incoming value, and uses the handler's return value to resolve or reject the derived promise associated with that handler.</p>
 		<emu-alg>
 			<ol>

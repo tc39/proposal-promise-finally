@@ -9,8 +9,7 @@ When the `finally` method is called with argument _onFinally_, the following ste
 
 ## PromiseReaction Records
 
-The PromiseReaction is a Record value used to store information about how a promise should react when it becomes resolved or rejected with a given value. PromiseReaction records are created by the PerformPromiseThen abstract operation, and are used by a <a href="#sec-promisereactionjob">PromiseReactionJob</a>.
-PromiseReaction records have the fields listed in Table 58.
+…
 <table>
 	<tbody>
 	<tr>
@@ -19,9 +18,9 @@ PromiseReaction records have the fields listed in Table 58.
 		<th>Meaning</th>
 	</tr>
 	<tr>
-		<td>[[Capabilities]]</td>
-		<td>A PromiseCapability record</td>
-		<td>The capabilities of the promise for which this record provides a reaction handler.</td>
+		<td>…</td>
+		<td>…</td>
+		<td>…</td>
 	</tr>
 	<tr>
 		<td>[[Type]]</td>
@@ -29,11 +28,9 @@ PromiseReaction records have the fields listed in Table 58.
 		<td></td>
 	</tr>
 	<tr>
-		<td>[[Handler]]</td>
-		<td>A function object or <b>undefined</b></td>
-		<td>
-			The function that should be applied to the incoming value, and whose return value will govern what happens to the derived promise. If [[Handler]] is <b>undefined</b>, a function that depends on the value of [[Type]] will be used instead.
-		</td>
+		<td>…</td>
+		<td>…</td>
+		<td>…</td>
 	</tr>
 	</tbody>
 </table>
@@ -81,13 +78,6 @@ The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the pro
     1. Perform EnqueueJob(`"PromiseJobs"`, <a href="#sec-promisereactionjob">PromiseReactionJob</a>, &laquo; _rejectReaction_, _reason_ &raquo;).
   1. Set _promise_'s [[PromiseIsHandled]] internal slot to **true**.
   1. Return _resultCapability_.[[Promise]].
-
-## TriggerPromiseReactions ( _reactions_, _argument_ )
-
-The abstract operation TriggerPromiseReactions takes a collection of PromiseReactionRecords and enqueues a new Job for each record. Each such Job processes the [[Type]] and [[Handler]] of the PromiseReactionRecord, and if the [[Handler]] is a function, calls it passing the given argument. If the [[Handler]] is **undefined**, the behavior is determined by the [[Type]].
-  1. Repeat for each _reaction_ in _reactions_, in original insertion order
-    1. Perform EnqueueJob(`"PromiseJobs"`, <a href="#sec-promisereactionjob">PromiseReactionJob</a>, &laquo; _reaction_, _argument_ &raquo;).
-  1. Return **undefined**.
 
 ## PromiseReactionJob ( _reaction_, _argument_ )
 
