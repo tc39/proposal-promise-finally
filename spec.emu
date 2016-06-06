@@ -80,10 +80,10 @@ contributors: Jordan Harband
 	<p>The abstract operation PerformPromiseFinally performs the &ldquo;finally&rdquo; operation on _promise_ using _onFinally_ as its settlement actions. The result is _resultCapability_'s promise.</p>
 	<emu-alg>
 		1. Assert: IsPromise(_promise_) is *true*.
-		1. Assert: _resultCapability_ is a PromiseCapability record.
+		1. Assert: _resultCapability_ is a PromiseCapability Record.
 		1. If IsCallable(_onFinally_) is *false*, then
 			1. Let _onFinally_ be *undefined*.
-		1. Let _reaction_ be the PromiseReaction { [[Capabilities]]: _resultCapability_, [[Type]]: `"Finally"`, [[Handler]]: _onFinally_ }.
+		1. Let _reaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Finally"`, [[Handler]]: _onFinally_ }.
 		1. Return EnqueuePromiseReactions(_promise_, _reaction_, _reaction_, _resultCapability_).
 	</emu-alg>
 </emu-clause>
@@ -93,25 +93,25 @@ contributors: Jordan Harband
 	<p>The abstract operation PerformPromiseThen performs the &ldquo;then&rdquo; operation on _promise_ using _onFulfilled_ and _onRejected_ as its settlement actions. The result is _resultCapability_'s promise.</p>
 	<emu-alg>
 		1. Assert: IsPromise(_promise_) is *true*.
-		1. Assert: _resultCapability_ is a PromiseCapability record.
+		1. Assert: _resultCapability_ is a PromiseCapability Record.
 		1. If IsCallable(_onFulfilled_) is *false*, then
 			1. Let _onFulfilled_ be *undefined*.
 		1. If IsCallable(_onRejected_) is *false*, then
 			1. Let _onRejected_ be *undefined*.
-		1. Let _fulfillReaction_ be the PromiseReaction { [[Capabilities]]: _resultCapability_, [[Type]]: `"Fulfill"`, [[Handler]]: _onFulfilled_ }.
-		1. Let _rejectReaction_ be the PromiseReaction { [[Capabilities]]: _resultCapability_, [[Type]]: `"Reject"`, [[Handler]]: _onRejected_ }.
+		1. Let _fulfillReaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Fulfill"`, [[Handler]]: _onFulfilled_ }.
+		1. Let _rejectReaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Reject"`, [[Handler]]: _onRejected_ }.
 		1. Return EnqueuePromiseReactions(_promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_).
 	</emu-alg>
 </emu-clause>
 
 <emu-clause id="sec-enqueuepromisereactions" aoid="EnqueuePromiseReactions">
 	<h1>EnqueuePromiseReactions ( _promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_ )</h1>
-	<p>The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the provided PromiseReaction records on _promise_. The result is _resultCapability_'s promise.</p>
+	<p>The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the provided PromiseReaction Records on _promise_. The result is _resultCapability_'s promise.</p>
 	<emu-alg>
 		1. Assert: IsPromise(_promise_) is *true*.
-		1. Assert: _resultCapability_ is a PromiseCapability record.
-		1. Assert: _fulfillReaction_ is a PromiseReaction record.
-		1. Assert: _rejectReaction_ is a PromiseReaction record.
+		1. Assert: _resultCapability_ is a PromiseCapability Record.
+		1. Assert: _fulfillReaction_ is a PromiseReaction Record.
+		1. Assert: _rejectReaction_ is a PromiseReaction Record.
 		1. If the value of _promise_'s [[PromiseState]] internal slot is `"pending"`, then
 			1. Append _fulfillReaction_ as the last element of the List that is the value of _promise_'s [[PromiseFulfillReactions]] internal slot.
 			1. Append _rejectReaction_ as the last element of the List that is the value of _promise_'s [[PromiseRejectReactions]] internal slot.
@@ -134,7 +134,7 @@ contributors: Jordan Harband
 	<p>The job PromiseReactionJob with parameters _reaction_ and _argument_ applies the appropriate handler to the incoming value, and uses the handler's return value to resolve or reject the derived promise associated with that handler.</p>
 	<emu-alg>
 		1. Assert: _reaction_ is a PromiseReaction Record.
-		1. Let _promiseCapability_ be _reaction_.[[Capabilities]].
+		1. Let _promiseCapability_ be _reaction_.[[Capability]].
 		1. Let _type_ be _reaction_.[[Type]].
 		1. Let _handler_ be _reaction_.[[Handler]].
 		1. If _handler_ is *undefined*, then

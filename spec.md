@@ -39,32 +39,32 @@ When the `finally` method is called with argument _onFinally_, the following ste
 
 The abstract operation PerformPromiseFinally performs the &ldquo;finally&rdquo; operation on _promise_ using _onFinally_ as its settlement actions. The result is _resultCapability_'s promise.
   1. Assert: IsPromise(_promise_) is **true**.
-  1. Assert: _resultCapability_ is a PromiseCapability record.
+  1. Assert: _resultCapability_ is a PromiseCapability Record.
   1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-iscallable">IsCallable</a>(_onFinally_) is **false**, then
     1. Let _onFinally_ be **undefined**.
-  1. Let _reaction_ be the PromiseReaction { [[Capabilities]]: _resultCapability_, [[Type]]: `"Finally"`, [[Handler]]: _onFinally_ }.
+  1. Let _reaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Finally"`, [[Handler]]: _onFinally_ }.
   1. Return <a href="#enqueuepromisereactions--promise-fulfillreaction-rejectreaction-resultcapability-">EnqueuePromiseReactions</a>(_promise_, _reaction_, _reaction_, _resultCapability_).
 
 ## PerformPromiseThen ( _promise_, _oInFulfilled_, _onRejected_, _resultCapability_ )
 
 The abstract operation PerformPromiseThen performs the &ldquo;then&rdquo; operation on _promise_ using _onFulfilled_ and _onRejected_ as its settlement actions. The result is _resultCapability_'s promise.
   1. Assert: IsPromise(_promise_) is **true**.
-  1. Assert: _resultCapability_ is a PromiseCapability record.
+  1. Assert: _resultCapability_ is a PromiseCapability Record.
   1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-iscallable">IsCallable</a>(_onFulfilled_) is **false**, then
     1. Let _onFulfilled_ be **undefined**.
   1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-iscallable">IsCallable</a>(_onRejected_) is **false**, then
     1. Let _onRejected_ be **undefined**.
-  1. Let _fulfillReaction_ be the PromiseReaction { [[Capabilities]]: _resultCapability_, [[Type]]: `"Fulfill"`, [[Handler]]: _onFulfilled_ }.
-  1. Let _rejectReaction_ be the PromiseReaction { [[Capabilities]]: _resultCapability_, [[Type]]: `"Reject"`, [[Handler]]: _onRejected_ }.
+  1. Let _fulfillReaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Fulfill"`, [[Handler]]: _onFulfilled_ }.
+  1. Let _rejectReaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Reject"`, [[Handler]]: _onRejected_ }.
   1. Return <a href="#enqueuepromisereactions--promise-fulfillreaction-rejectreaction-resultcapability-">EnqueuePromiseReactions</a>(_promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_).
 
 ## EnqueuePromiseReactions ( _promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_ )
 
-The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the provided PromiseReaction records on _promise_. The result is _resultCapability_'s promise.
+The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the provided PromiseReaction Record on _promise_. The result is _resultCapability_'s promise.
   1. Assert: IsPromise(_promise_) is **true**.
-  1. Assert: _resultCapability_ is a PromiseCapability record.
-  1. Assert: _fulfillReaction_ is a PromiseReaction record.
-  1. Assert: _rejectReaction_ is a PromiseReaction record.
+  1. Assert: _resultCapability_ is a PromiseCapability Record.
+  1. Assert: _fulfillReaction_ is a PromiseReaction Record.
+  1. Assert: _rejectReaction_ is a PromiseReaction Record.
   1. If the value of _promise_'s [[PromiseState]] internal slot is `"pending"`, then
     1. Append _fulfillReaction_ as the last element of the List that is the value of _promise_'s [[PromiseFulfillReactions]] internal slot.
     1. Append _rejectReaction_ as the last element of the List that is the value of _promise_'s [[PromiseRejectReactions]] internal slot.
@@ -83,7 +83,7 @@ The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the pro
 
 The job PromiseReactionJob with parameters _reaction_ and _argument_ applies the appropriate handler to the incoming value, and uses the handler's return value to resolve or reject the derived promise associated with that handler.
   1. Assert: _reaction_ is a PromiseReaction Record.
-  1. Let _promiseCapability_ be _reaction_.[[Capabilities]].
+  1. Let _promiseCapability_ be _reaction_.[[Capability]].
   1. Let _type_ be _reaction_.[[Type]].
   1. Let _handler_ be _reaction_.[[Handler]].
   1. If _handler_ is **undefined**, then

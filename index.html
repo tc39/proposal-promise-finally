@@ -115,7 +115,7 @@
 			</ol>
 		</div>
 	</div>
-	<h1 class="version">Stage 0 Draft / June 2, 2016</h1>
+	<h1 class="version">Stage 0 Draft / June 6, 2016</h1>
 	<h1 class="title">Promise.prototype.finally</h1>
 
 	<emu-clause id="sec-promise.prototype.finally">
@@ -216,7 +216,7 @@
 				<li>Assert:
 					<emu-xref aoid="IsPromise"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ispromise">IsPromise</a></emu-xref>(<var>promise</var>) is
 					<emu-val>true</emu-val>.</li>
-				<li>Assert: <var>resultCapability</var> is a PromiseCapability record.</li>
+				<li>Assert: <var>resultCapability</var> is a PromiseCapability Record.</li>
 				<li>If
 					<emu-xref aoid="IsCallable"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
 					<emu-val>false</emu-val>, then
@@ -225,7 +225,7 @@
 							<emu-val>undefined</emu-val>.</li>
 					</ol>
 				</li>
-				<li>Let <var>reaction</var> be the PromiseReaction { [[Capabilities]]: <var>resultCapability</var>, [[Type]]: <code>"Finally"</code>, [[Handler]]: <var>onFinally</var> }.</li>
+				<li>Let <var>reaction</var> be the PromiseReaction { [[Capability]]: <var>resultCapability</var>, [[Type]]: <code>"Finally"</code>, [[Handler]]: <var>onFinally</var> }.</li>
 				<li>Return
 					<emu-xref aoid="EnqueuePromiseReactions"><a href="#sec-enqueuepromisereactions">EnqueuePromiseReactions</a></emu-xref>(<var>promise</var>, <var>reaction</var>, <var>reaction</var>, <var>resultCapability</var>).
 				</li>
@@ -241,7 +241,7 @@
 				<li>Assert:
 					<emu-xref aoid="IsPromise"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ispromise">IsPromise</a></emu-xref>(<var>promise</var>) is
 					<emu-val>true</emu-val>.</li>
-				<li>Assert: <var>resultCapability</var> is a PromiseCapability record.</li>
+				<li>Assert: <var>resultCapability</var> is a PromiseCapability Record.</li>
 				<li>If
 					<emu-xref aoid="IsCallable"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-iscallable">IsCallable</a></emu-xref>(<var>onFulfilled</var>) is
 					<emu-val>false</emu-val>, then
@@ -258,8 +258,8 @@
 							<emu-val>undefined</emu-val>.</li>
 					</ol>
 				</li>
-				<li>Let <var>fulfillReaction</var> be the PromiseReaction { [[Capabilities]]: <var>resultCapability</var>, [[Type]]: <code>"Fulfill"</code>, [[Handler]]: <var>onFulfilled</var> }.</li>
-				<li>Let <var>rejectReaction</var> be the PromiseReaction { [[Capabilities]]: <var>resultCapability</var>, [[Type]]: <code>"Reject"</code>, [[Handler]]: <var>onRejected</var> }.</li>
+				<li>Let <var>fulfillReaction</var> be the PromiseReaction { [[Capability]]: <var>resultCapability</var>, [[Type]]: <code>"Fulfill"</code>, [[Handler]]: <var>onFulfilled</var> }.</li>
+				<li>Let <var>rejectReaction</var> be the PromiseReaction { [[Capability]]: <var>resultCapability</var>, [[Type]]: <code>"Reject"</code>, [[Handler]]: <var>onRejected</var> }.</li>
 				<li>Return
 					<emu-xref aoid="EnqueuePromiseReactions"><a href="#sec-enqueuepromisereactions">EnqueuePromiseReactions</a></emu-xref>(<var>promise</var>, <var>fulfillReaction</var>, <var>rejectReaction</var>, <var>resultCapability</var>).
 				</li>
@@ -269,15 +269,15 @@
 
 	<emu-clause id="sec-enqueuepromisereactions" aoid="EnqueuePromiseReactions">
 		<h1><span class="secnum">5</span>EnqueuePromiseReactions ( <var>promise</var>, <var>fulfillReaction</var>, <var>rejectReaction</var>, <var>resultCapability</var> )<span class="utils"><span class="anchor"><a href="#sec-enqueuepromisereactions">#</a></span></span></h1>
-		<p>The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the provided PromiseReaction records on <var>promise</var>. The result is <var>resultCapability</var>'s promise.</p>
+		<p>The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the provided PromiseReaction Records on <var>promise</var>. The result is <var>resultCapability</var>'s promise.</p>
 		<emu-alg>
 			<ol>
 				<li>Assert:
 					<emu-xref aoid="IsPromise"><a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ispromise">IsPromise</a></emu-xref>(<var>promise</var>) is
 					<emu-val>true</emu-val>.</li>
-				<li>Assert: <var>resultCapability</var> is a PromiseCapability record.</li>
-				<li>Assert: <var>fulfillReaction</var> is a PromiseReaction record.</li>
-				<li>Assert: <var>rejectReaction</var> is a PromiseReaction record.</li>
+				<li>Assert: <var>resultCapability</var> is a PromiseCapability Record.</li>
+				<li>Assert: <var>fulfillReaction</var> is a PromiseReaction Record.</li>
+				<li>Assert: <var>rejectReaction</var> is a PromiseReaction Record.</li>
 				<li>If the value of <var>promise</var>'s [[PromiseState]] internal slot is <code>"pending"</code>, then
 					<ol>
 						<li>Append <var>fulfillReaction</var> as the last element of the
@@ -320,7 +320,7 @@
 		<emu-alg>
 			<ol>
 				<li>Assert: <var>reaction</var> is a PromiseReaction Record.</li>
-				<li>Let <var>promiseCapability</var> be <var>reaction</var>.[[Capabilities]].</li>
+				<li>Let <var>promiseCapability</var> be <var>reaction</var>.[[Capability]].</li>
 				<li>Let <var>type</var> be <var>reaction</var>.[[Type]].</li>
 				<li>Let <var>handler</var> be <var>reaction</var>.[[Handler]].</li>
 				<li>If <var>handler</var> is
