@@ -23,8 +23,8 @@ The reasons to stick with `finally` are straightforward: just like `catch`, `fin
 I’d briefly considered `always` as an alternative, since that wouldn’t imply ordering, but I think the parallels to the syntactic variation are compelling.
 
 ## Implementations
- - [Bluebird#finally](https://www.npmjs.com/package/bluebird)
- - [Q#fin](https://www.npmjs.com/package/q)
+ - [Bluebird#finally](http://bluebirdjs.com/docs/api/finally.html)
+ - [Q#finally](https://github.com/kriskowal/q/wiki/API-Reference#promisefinallycallback)
  - [when#finally](https://github.com/cujojs/when/blob/master/docs/api.md#promisefinally)
  - [jQuery jqXHR#always](http://api.jquery.com/jQuery.ajax/#jqXHR)
 
