@@ -128,7 +128,7 @@ contributors: Jordan Harband
 	</emu-alg>
 </emu-clause>
 
-<!-- es6num="25.4.1.8" -->
+<!-- es6num="25.4.4.5" -->
 <emu-clause id="sec-promise.resolve">
 	<h1>Promise.resolve ( _x_ )</h1>
 	<p>The `resolve` function returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
