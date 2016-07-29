@@ -294,17 +294,17 @@
 					<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref>.</li>
 				<li>Assert: <var>rejectReaction</var> is a PromiseReaction
 					<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref>.</li>
-				<li>If the value of <var>promise</var>'s [[PromiseState]] internal slot is <code>"pending"</code>, then
+				<li>If <var>promise</var>.[[PromiseState]] is <code>"pending"</code>, then
 					<ol>
 						<li>Append <var>fulfillReaction</var> as the last element of the
-							<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref> that is the value of <var>promise</var>'s [[PromiseFulfillReactions]] internal slot.</li>
+							<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref> that is <var>promise</var>.[[PromiseFulfillReactions]].</li>
 						<li>Append <var>rejectReaction</var> as the last element of the
-							<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref> that is the value of <var>promise</var>'s [[PromiseRejectReactions]] internal slot.</li>
+							<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">List</a></emu-xref> that is <var>promise</var>.[[PromiseRejectReactions]].</li>
 					</ol>
 				</li>
-				<li>Else if the value of <var>promise</var>'s [[PromiseState]] internal slot is <code>"fulfilled"</code>, then
+				<li>Else if <var>promise</var>.[[PromiseState]] is <code>"fulfilled"</code>, then
 					<ol>
-						<li>Let <var>value</var> be the value of <var>promise</var>'s [[PromiseResult]] internal slot.</li>
+						<li>Let <var>value</var> be <var>promise</var>.[[PromiseResult]].</li>
 						<li>Perform
 							<emu-xref aoid="EnqueueJob"><a href="https://tc39.github.io/ecma262/#sec-enqueuejob">EnqueueJob</a></emu-xref>(<code>"PromiseJobs"</code>,
 							<emu-xref aoid="PromiseReactionJob"><a href="#sec-promisereactionjob">PromiseReactionJob</a></emu-xref>, « <var>fulfillReaction</var>, <var>value</var> »).</li>
@@ -312,9 +312,9 @@
 				</li>
 				<li>Else,
 					<ol>
-						<li>Assert: The value of <var>promise</var>'s [[PromiseState]] internal slot is <code>"rejected"</code>.</li>
-						<li>Let <var>reason</var> be the value of <var>promise</var>'s [[PromiseResult]] internal slot.</li>
-						<li>If the value of <var>promise</var>'s [[PromiseIsHandled]] internal slot is
+						<li>Assert: <var>promise</var>.[[PromiseState]] is <code>"rejected"</code>.</li>
+						<li>Let <var>reason</var> be <var>promise</var>.[[PromiseResult]].</li>
+						<li>If <var>promise</var>.[[PromiseIsHandled]] is
 							<emu-val>false</emu-val>, perform
 							<emu-xref aoid="HostPromiseRejectionTracker"><a href="https://tc39.github.io/ecma262/#sec-host-promise-rejection-tracker">HostPromiseRejectionTracker</a></emu-xref>(<var>promise</var>, <code>"handle"</code>).</li>
 						<li>Perform
@@ -322,7 +322,7 @@
 							<emu-xref aoid="PromiseReactionJob"><a href="#sec-promisereactionjob">PromiseReactionJob</a></emu-xref>, « <var>rejectReaction</var>, <var>reason</var> »).</li>
 					</ol>
 				</li>
-				<li>Set <var>promise</var>'s [[PromiseIsHandled]] internal slot to
+				<li>Set <var>promise</var>.[[PromiseIsHandled]] to
 					<emu-val>true</emu-val>.</li>
 				<li>Return <var>resultCapability</var>.[[Promise]].
 				</li>
