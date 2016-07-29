@@ -4,7 +4,7 @@
 	"description": "ECMAScript spec proposal for Promise#finally",
 	"scripts": {
 		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -t > index.html",
-		"prepublish": "npm run build && echo >&2 'no publishing' && exit 255"
+		"prepublish": "in-install || (npm run build && not-in-publish || (echo >&2 'no publishing' && exit 255))"
 	},
 	"repository": {
 		"type": "git",
@@ -31,6 +31,7 @@
 	"dependencies": {},
 	"devDependencies": {
 		"ecmarkup": "^3.2.6",
-		"js-beautify": "^1.6.3"
+		"js-beautify": "^1.6.3",
+		"in-publish": "^2.0.0"
 	}
 }
