@@ -3,7 +3,7 @@ ECMAScript Proposal, specs, and reference implementation for `Promise.prototype.
 
 Spec drafted by [@ljharb](https://github.com/ljharb), following the lead from the [cancelable promise proposal](https://github.com/domenic/cancelable-promise/blob/master/Third%20State.md#promiseprototypefinally-implementation).
 
-This proposal is currently [stage 0](https://github.com/tc39/proposals/blob/master/stage-0-proposals.md) of the [process](https://tc39.github.io/process-document/).
+This proposal is currently [stage 2](https://github.com/tc39/proposals/blob/master/README.md) of the [process](https://tc39.github.io/process-document/).
 
 ## Rationale
 Many promise libraries have a "finally" method, for registering a callback to be invoked when a promise is settled (either fulfilled, or rejected). The essential use case here is cleanup - I want to hide the "loading" spinner on my AJAX request, or I want to close any file handles I’ve opened, or I want to log that an operation has completed regardless of whether it succeeded or not.
