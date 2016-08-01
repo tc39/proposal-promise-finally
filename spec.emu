@@ -128,6 +128,34 @@ contributors: Jordan Harband
 	</emu-alg>
 </emu-clause>
 
+<!-- es6num="25.4.4.5" -->
+<emu-clause id="sec-promise.resolve">
+	<h1>Promise.resolve ( _x_ )</h1>
+	<p>The `resolve` function returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
+	<emu-alg>
+		1. Let _C_ be the *this* value.
+		1. If Type(_C_) is not Object, throw a *TypeError* exception.
+		1. Return ? PromiseResolve(_C_, _x_).
+	</emu-alg>
+	<emu-note>
+		<p>The `resolve` function expects its *this* value to be a constructor function that supports the parameter conventions of the `Promise` constructor.</p>
+	</emu-note>
+</emu-clause>
+
+<emu-clause id="sec-promise-resolve" aoid="PromiseResolve">
+	<h1>PromiseResolve ( _C_, _x_ )</h1>
+	<p>The abstract operation PromiseResolve, given a constructor and a value, returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
+	<emu-alg>
+		1. Assert: Type(_C_) is Object.
+		1. If IsPromise(_x_) is *true*, then
+			1. Let _xConstructor_ be ? Get(_x_, `"constructor"`).
+			1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
+		1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
+			1. Perform ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _x_ &raquo;).
+		1. Return _promiseCapability_.[[Promise]].
+	</emu-alg>
+</emu-clause>
+
 <!-- es6num="25.4.2.1" -->
 <emu-clause id="sec-promisereactionjob" aoid="PromiseReactionJob">
 	<h1>PromiseReactionJob ( _reaction_, _argument_ )</h1>
@@ -142,14 +170,18 @@ contributors: Jordan Harband
 			1. Else if _type_ is `"Reject"`, let _handlerResult_ be Completion{[[Type]]: ~throw~, [[Value]]: _argument_, [[Target]]: ~empty~}.
 			1. Else if _type_ is `"Finally"`, let _handlerResult_ be NormalCompletion(_argument_).
 			1. Assert: _handlerResult_ is defined.
-		1. Else if _type_ is `"Finally"`, let _handlerResult_ be Call(_handler_, *undefined*, &laquo; &raquo;).
+		1. Else if _type_ is `"Finally"`, then
+			1. let _handlerResult_ be Call(_handler_, *undefined*, &laquo; &raquo;).
+			1. If _handlerResult_ is not an abrupt completion, then
+				1. Let _handlerPromise_ be ? PromiseResolve(%Promise%, _handlerResult_.[[Value]]).
+				1. Let _argumentThunk_ be equivalent to a function that returns _argument_.
+				1. Let _finalCapability_ be ? NewPromiseCapability(%Promise%).
+				1. Return ? PerformPromiseThen(_handlerPromise_, _argumentThunk_, *undefined*, _finalCapability_).
 		1. Else, let _handlerResult_ be Call(_handler_, *undefined*, &laquo; _argument_ &raquo;).
 		1. If _handlerResult_ is an abrupt completion, then
 			1. Let _status_ be Call(_promiseCapability_.[[Reject]], *undefined*, &laquo; _handlerResult_.[[Value]] &raquo;).
 		1. Else,
 			1. Let _status_ be Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _handlerResult_.[[Value]] &raquo;).
-			1. If _type_ is `"Finally"` and _status_ is a normal completion, then
-				1. Return NormalCompletion(_handlerResult_.[[Value]]).
 		1. Return Completion(_status_).
 	</emu-alg>
 </emu-clause>
