@@ -30,8 +30,8 @@ if (typeof Promise.prototype.finally !== 'function') {
 			var C;
 			var newPromise = Promise.prototype.then.call(
 				this, // throw if IsPromise(this) is not true
-				x => new C()(resolve => resolve(handler())).then(() => x),
-				e => new C()(resolve => resolve(handler())).then(() => { throw e; })
+				x => new C(resolve => resolve(handler())).then(() => x),
+				e => new C(resolve => resolve(handler())).then(() => { throw e; })
 			);
 			C = speciesConstructor(this, Promise); // throws if SpeciesConstructor throws
 			return newPromise;
