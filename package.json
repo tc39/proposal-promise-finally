@@ -4,7 +4,10 @@
 	"description": "ECMAScript spec proposal for Promise#finally",
 	"scripts": {
 		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -t > index.html",
-		"prepublish": "in-install || (npm run build && not-in-publish || (echo >&2 'no publishing' && exit 255))"
+		"prepublish": "in-install || (npm run build && not-in-publish || (echo >&2 'no publishing' && exit 255))",
+		"test": "npm run test:aplus && npm run test:finally",
+		"test:aplus": "promises-aplus-tests test/adapter",
+		"test:finally": "mocha test/test"
 	},
 	"repository": {
 		"type": "git",
@@ -28,10 +31,14 @@
 		"url": "https://github.com/ljharb/proposal-promise-finally/issues"
 	},
 	"homepage": "https://github.com/ljharb/proposal-promise-finally#readme",
-	"dependencies": {},
+	"dependencies": {
+		"especially": "^2.0.1"
+	},
 	"devDependencies": {
 		"ecmarkup": "^3.2.6",
+		"in-publish": "^2.0.0",
 		"js-beautify": "^1.6.3",
-		"in-publish": "^2.0.0"
+		"mocha": "^3.1.0",
+		"promises-aplus-tests": "^2.1.2"
 	}
 }
