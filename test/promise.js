@@ -20,6 +20,8 @@ const {
 } = require('especially/meta');
 const { '@@species': atAtSpecies } = require('especially/well-known-symbols');
 
+let PromiseIntrinsic;
+
 function IfAbruptRejectPromise(value, capability) {
 	// Usage: pass it exceptions; it only handles that case.
 	// Always use `return` before it, i.e. `try { ... } catch (e) { return IfAbruptRejectPromise(e, capability); }`.
@@ -339,7 +341,7 @@ function PromiseResolveThenableJob(promiseToResolve, thenable, then) {
 	}
 }
 
-module.exports = class Promise {
+PromiseIntrinsic = class Promise {
 	constructor(executor) {
 		if (IsCallable(executor) === false) {
 			throw new TypeError('executor must be callable');
@@ -473,16 +475,7 @@ module.exports = class Promise {
 			throw new TypeError('Promise.all must be called on an object');
 		}
 
-		if (IsPromise(x) === true) {
-			const xConstructor = Get(x, 'constructor');
-			if (SameValue(xConstructor, C) === true) {
-				return x;
-			}
-		}
-
-		const promiseCapability = NewPromiseCapability(C);
-		Call(get_slot(promiseCapability, '[[Resolve]]'), undefined, [x]);
-		return get_slot(promiseCapability, '[[Promise]]');
+		return PromiseResolve(C, x);
 	}
 
 	static get [atAtSpecies]() {
@@ -503,6 +496,32 @@ module.exports = class Promise {
 		const resultCapability = NewPromiseCapability(C);
 		return PerformPromiseThen(promise, onFulfilled, onRejected, resultCapability);
 	}
+
+	finally(onFinally) {
+		const promise = this;
+		if (IsPromise(this) === false) {
+			throw new TypeError('Promise.prototype.finally only works on real promises');
+		}
+
+		const C = SpeciesConstructor(promise, Promise);
+		const resultCapability = NewPromiseCapability(C);
+		return PerformPromiseFinally(promise, onFinally, resultCapability);
+	}
+}
+
+function PromiseResolve(C, x) {
+	assert(Type(C) === 'Object');
+
+	if (IsPromise(x) === true) {
+		const xConstructor = Get(x, 'constructor');
+		if (SameValue(xConstructor, C) === true) {
+			return x;
+		}
+	}
+
+	const promiseCapability = NewPromiseCapability(C);
+	Call(get_slot(promiseCapability, '[[Resolve]]'), undefined, [x]);
+	return get_slot(promiseCapability, '[[Promise]]');
 }
 
 function createPromiseReactionRecord(capability, type, handler) {
@@ -516,6 +535,44 @@ function createPromiseReactionRecord(capability, type, handler) {
 	set_slot(record, '[[Type]]', type);
 	set_slot(record, '[[Handler]]', handler);
 	return record;
+}
+
+function PerformPromiseFinally(promise, onFinally, resultCapability) {
+	assert(IsPromise(promise) === true);
+	assert(IsPromiseCapabilityRecord(resultCapability) === true);
+
+	if (IsCallable(onFinally) === false) {
+		return PerformPromiseThen(promise, undefined, undefined, resultCapability);
+	}
+
+	const thenFinally = CreateThenFinally(onFinally);
+	const catchFinally = CreateCatchFinally(onFinally);
+
+	return PerformPromiseThen(promise, thenFinally, catchFinally, resultCapability);
+}
+
+function CreateThenFinally(onFinally) {
+	assert(IsCallable(onFinally) === true);
+
+	return (value) => {
+		const result = onFinally();
+		const promise = PromiseResolve(PromiseIntrinsic, result);
+		const valueThunk = () => value;
+		const promiseCapability = NewPromiseCapability(PromiseIntrinsic);
+		return PerformPromiseThen(promise, valueThunk, undefined, promiseCapability);
+	};
+}
+
+function CreateCatchFinally(onFinally) {
+	assert(IsCallable(onFinally) === true);
+
+	return (reason) => {
+		const result = onFinally();
+		const promise = PromiseResolve(PromiseIntrinsic, result);
+		const throwReason = () => { throw reason; };
+		const promiseCapability = NewPromiseCapability(PromiseIntrinsic);
+		return PerformPromiseThen(promise, throwReason, undefined, promiseCapability);
+	};
 }
 
 function PerformPromiseThen(promise, onFulfilled, onRejected, resultCapability) {
@@ -534,7 +591,6 @@ function PerformPromiseThen(promise, onFulfilled, onRejected, resultCapability) 
 	const rejectReaction = createPromiseReactionRecord(resultCapability, 'Reject', onRejected);
 
 	const state = get_slot(promise, '[[PromiseState]]');
-
 	if (state === 'pending') {
 		get_slot(promise, '[[PromiseFulfillReactions]]').push(fulfillReaction);
 		get_slot(promise, '[[PromiseRejectReactions]]').push(rejectReaction);
@@ -553,3 +609,5 @@ function PerformPromiseThen(promise, onFulfilled, onRejected, resultCapability) 
 	set_slot(promise, '[[PromiseIsHandled]]', true);
 	return get_slot(resultCapability, '[[Promise]]');
 }
+
+module.exports = PromiseIntrinsic;
