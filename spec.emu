@@ -151,7 +151,7 @@ contributors: Jordan Harband
 			1. Let _xConstructor_ be ? Get(_x_, `"constructor"`).
 			1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
 		1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
-			1. Perform ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _x_ &raquo;).
+		1. Perform ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _x_ &raquo;).
 		1. Return _promiseCapability_.[[Promise]].
 	</emu-alg>
 </emu-clause>

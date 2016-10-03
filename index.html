@@ -397,13 +397,10 @@
 					</ol>
 				</li>
 				<li>Let <var>promiseCapability</var> be ?
-					<emu-xref aoid="NewPromiseCapability"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(<var>C</var>).
-					<ol>
-						<li>Perform ?
-							<emu-xref aoid="Call"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]],
-							<emu-val>undefined</emu-val>, « <var>x</var> »).</li>
-					</ol>
-				</li>
+					<emu-xref aoid="NewPromiseCapability"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(<var>C</var>).</li>
+				<li>Perform ?
+					<emu-xref aoid="Call"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>promiseCapability</var>.[[Resolve]],
+					<emu-val>undefined</emu-val>, « <var>x</var> »).</li>
 				<li>Return <var>promiseCapability</var>.[[Promise]].
 				</li>
 			</ol>
