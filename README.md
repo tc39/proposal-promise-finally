@@ -14,6 +14,7 @@ Many promise libraries have a "finally" method, for registering a callback to be
  - A `finally` callback will not receive any argument, since there's no reliably means of determining if the promise was fulfilled or rejected. This use case is for precisely when you *do not care* about the rejection reason, or the fulfillment value, and so there's no need to provide it.
  - Unlike `Promise.resolve(2).then(() => {}, () => {})` (which will be resolved with `undefined`), `Promise.resolve(2).finally(() => {})` will be resolved with `2`.
  - Similarly, unlike `Promise.reject(3).then(() => {}, () => {})` (which will be resolved with `undefined`), `Promise.reject(3).finally(() => {})` will be rejected with `3`.
+ - Unlike `Promise.reject(new Error('unanticipated error')).then({}, {})` where the `unanticipated error` will be swallowed, `Promise.reject(new Error('unanticipated error')).finally(cleanup)` will make the `unanticipated error` to bubble up all the way to the unhandled rejection handler, logging the unanticipated error like desired.
 
 However, please note: a `throw` (or returning a rejected promise) in the `finally` callback will reject the new promise with that rejection reason.
 
