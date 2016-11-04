@@ -12,8 +12,7 @@ When the `finally` method is called with argument _onFinally_, the following ste
 The abstract operation PerformPromiseFinally performs the &ldquo;finally&rdquo; operation on _promise_ using _onFinally_ as its settlement actions. The result is _resultCapability_'s promise.
   1. Assert: IsPromise(_promise_) is **true**.
   1. Assert: _resultCapability_ is a PromiseCapability Record.
-  1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-iscallable">IsCallable</a>(_onFinally_) is **false**, then
-    1. Return <a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a>(_promise_, **undefined**, **undefined**, _resultCapability_).
+  1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-iscallable">IsCallable</a>(_onFinally_) is **false**, then return <a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a>(_promise_, **undefined**, **undefined**, _resultCapability_).
   1. Let _thenFinally_ be CreateThenFinally(_onFinally_).
   1. Let _catchFinally_ be CreateCatchFinally(_onFinally_).
   1. Return <a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a>(_promise_, _thenFinally_, _catchFinally_, _resultCapability_).
@@ -24,7 +23,7 @@ The abstract operation CreateThenFinally takes an _onFinally_ function, and retu
   1. Assert: IsCallable(_onFinally_) is *true*.
   1. Return a function that takes one argument, _value_, and when invoked, performs the following steps:
     1. Let _result_ be ? Call(_onFinally_, *undefined*).
-    1. Let _promise_ be ! PromiseResolve(%Promise%, _result_);
+    1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
     1. Let _valueThunk_ be equivalent to a function that returns _value_.
     1. Let _promiseCapability_ be ! NewPromiseCapability(%Promise%).
     1. Return PerformPromiseThen(_promise_, _valueThunk_, *undefined*, _promiseCapability_).
@@ -35,7 +34,7 @@ The abstract operation CreateCatchFinally takes an _onFinally_ function, and ret
   1. Assert: IsCallable(_onFinally_) is *true*.
   1. Return a function that takes one argument, _reason_, and when invoked, performs the following steps:
     1. Let _result_ be ? Call(_onFinally_, *undefined*).
-    1. Let _promise_ be ! PromiseResolve(%Promise%, _result_);
+    1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
     1. Let _thrower_ be equivalent to a function that throws _reason_.
     1. Let _promiseCapability_ be ! NewPromiseCapability(%Promise%).
     1. Return PerformPromiseThen(_promise_, _thrower_, *undefined*, _promiseCapability_).

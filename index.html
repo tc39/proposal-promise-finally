@@ -116,7 +116,7 @@
 			</ol>
 		</div>
 	</div>
-	<h1 class="version">Stage 2 Draft / October 3, 2016</h1>
+	<h1 class="version">Stage 2 Draft / November 4, 2016</h1>
 	<h1 class="title">Promise.prototype.finally</h1>
 
 	<emu-clause id="sec-promise.prototype.finally">
@@ -154,14 +154,10 @@
 					<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref>.</li>
 				<li>If
 					<emu-xref aoid="IsCallable"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
-					<emu-val>false</emu-val>, then
-					<ol>
-						<li>Return
-							<emu-xref aoid="PerformPromiseThen"><a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a></emu-xref>(<var>promise</var>,
-							<emu-val>undefined</emu-val>,
-							<emu-val>undefined</emu-val>, <var>resultCapability</var>);</li>
-					</ol>
-				</li>
+					<emu-val>false</emu-val>, then return
+					<emu-xref aoid="PerformPromiseThen"><a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a></emu-xref>(<var>promise</var>,
+					<emu-val>undefined</emu-val>,
+					<emu-val>undefined</emu-val>, <var>resultCapability</var>);</li>
 				<li>Let <var>thenFinally</var> be !
 					<emu-xref aoid="CreateThenFinally"><a href="#sec-createthenfinally">CreateThenFinally</a></emu-xref>(<var>onFinally</var>).</li>
 				<li>Let <var>catchFinally</var> be !
@@ -189,7 +185,7 @@
 							<emu-val>undefined</emu-val>).</li>
 						<li>Let <var>promise</var> be !
 							<emu-xref aoid="PromiseResolve"><a href="#sec-promise-resolve">PromiseResolve</a></emu-xref>(
-							<emu-xref href="#sec-promise-constructor"><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">%Promise%</a></emu-xref>, <var>result</var>);</li>
+							<emu-xref href="#sec-promise-constructor"><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">%Promise%</a></emu-xref>, <var>result</var>).</li>
 						<li>Let <var>valueThunk</var> be equivalent to a function that returns <var>value</var>.</li>
 						<li>Let <var>promiseCapability</var> be !
 							<emu-xref aoid="NewPromiseCapability"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(
@@ -220,13 +216,13 @@
 							<emu-val>undefined</emu-val>).</li>
 						<li>Let <var>promise</var> be !
 							<emu-xref aoid="PromiseResolve"><a href="#sec-promise-resolve">PromiseResolve</a></emu-xref>(
-							<emu-xref href="#sec-promise-constructor"><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">%Promise%</a></emu-xref>, <var>result</var>);</li>
+							<emu-xref href="#sec-promise-constructor"><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">%Promise%</a></emu-xref>, <var>result</var>).</li>
 						<li>Let <var>thrower</var> be equivalent to a function that throws <var>reason</var>.</li>
 						<li>Let <var>promiseCapability</var> be !
 							<emu-xref aoid="NewPromiseCapability"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(
 							<emu-xref href="#sec-promise-constructor"><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">%Promise%</a></emu-xref>).</li>
 						<li>Return
-							<emu-xref aoid="PerformPromiseThen"><a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a></emu-xref>(<var>promise</var>, <var>reason</var>,
+							<emu-xref aoid="PerformPromiseThen"><a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a></emu-xref>(<var>promise</var>, <var>thrower</var>,
 							<emu-val>undefined</emu-val>, <var>promiseCapability</var>).
 						</li>
 					</ol>
