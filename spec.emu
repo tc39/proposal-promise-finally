@@ -21,110 +21,44 @@ contributors: Jordan Harband
 	</emu-alg>
 </emu-clause>
 
-<emu-clause id="sec-promisereaction-records">
-	<h1>PromiseReaction Records</h1>
-	<p>…</p>
-	<emu-table id="table-58" caption="PromiseReaction Record Fields">
-		<table>
-			<tbody>
-			<tr>
-				<th>
-					Field Name
-				</th>
-				<th>
-					Value
-				</th>
-				<th>
-					Meaning
-				</th>
-			</tr>
-			<tr>
-				<td>
-					…
-				</td>
-				<td>
-					…
-				</td>
-				<td>
-					…
-				</td>
-			</tr>
-			<tr>
-				<td>
-					[[Type]]
-				</td>
-				<td>
-					Either `"Fulfill"`, `"Reject"`, or `"Finally"`.
-				</td>
-				<td>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					…
-				</td>
-				<td>
-					…
-				</td>
-				<td>
-					…
-				</td>
-			</tr>
-			</tbody>
-		</table>
-	</emu-table>
-</emu-clause>
-
 <emu-clause id="sec-performpromisefinally" aoid="PerformPromiseFinally">
 	<h1>PerformPromiseFinally ( _promise_, _onFinally_, _resultCapability_ )</h1>
 	<p>The abstract operation PerformPromiseFinally performs the &ldquo;finally&rdquo; operation on _promise_ using _onFinally_ as its settlement actions. The result is _resultCapability_'s promise.</p>
 	<emu-alg>
 		1. Assert: IsPromise(_promise_) is *true*.
 		1. Assert: _resultCapability_ is a PromiseCapability Record.
-		1. If IsCallable(_onFinally_) is *false*, then
-			1. Let _onFinally_ be *undefined*.
-		1. Let _reaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Finally"`, [[Handler]]: _onFinally_ }.
-		1. Return EnqueuePromiseReactions(_promise_, _reaction_, _reaction_, _resultCapability_).
+		1. If IsCallable(_onFinally_) is *false*, then return PerformPromiseThen(_promise_, *undefined*, *undefined*, _resultCapability_);
+		1. Let _thenFinally_ be ! CreateThenFinally(_onFinally_).
+		1. Let _catchFinally_ be ! CreateCatchFinally(_onFinally_).
+		1. Return PerformPromiseThen(_promise_, _thenFinally_, _catchFinally_, _resultCapability_).
 	</emu-alg>
 </emu-clause>
 
-<emu-clause id="sec-performpromisethen" aoid="PerformPromiseThen">
-	<h1>PerformPromiseThen ( _promise_, _onFulfilled_, _onRejected_, _resultCapability_ )</h1>
-	<p>The abstract operation PerformPromiseThen performs the &ldquo;then&rdquo; operation on _promise_ using _onFulfilled_ and _onRejected_ as its settlement actions. The result is _resultCapability_'s promise.</p>
+<emu-clause id="sec-createthenfinally" aoid="CreateThenFinally">
+	<h1>CreateThenFinally ( _onFinally_ )</h1>
+	<p>The abstract operation CreateThenFinally takes an _onFinally_ function, and returns a callback function for use in PerformPromiseFinally.</p>
 	<emu-alg>
-		1. Assert: IsPromise(_promise_) is *true*.
-		1. Assert: _resultCapability_ is a PromiseCapability Record.
-		1. If IsCallable(_onFulfilled_) is *false*, then
-			1. Let _onFulfilled_ be *undefined*.
-		1. If IsCallable(_onRejected_) is *false*, then
-			1. Let _onRejected_ be *undefined*.
-		1. Let _fulfillReaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Fulfill"`, [[Handler]]: _onFulfilled_ }.
-		1. Let _rejectReaction_ be the PromiseReaction { [[Capability]]: _resultCapability_, [[Type]]: `"Reject"`, [[Handler]]: _onRejected_ }.
-		1. Return EnqueuePromiseReactions(_promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_).
+		1. Assert: IsCallable(_onFinally_) is *true*.
+		1. Return a function that takes one argument, _value_, and when invoked, performs the following steps:
+			1. Let _result_ be ? Call(_onFinally_, *undefined*).
+			1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
+			1. Let _valueThunk_ be equivalent to a function that returns _value_.
+			1. Let _promiseCapability_ be ! NewPromiseCapability(%Promise%).
+			1. Return PerformPromiseThen(_promise_, _valueThunk_, *undefined*, _promiseCapability_).
 	</emu-alg>
 </emu-clause>
 
-<emu-clause id="sec-enqueuepromisereactions" aoid="EnqueuePromiseReactions">
-	<h1>EnqueuePromiseReactions ( _promise_, _fulfillReaction_, _rejectReaction_, _resultCapability_ )</h1>
-	<p>The abstract operation EnqueuePromiseReactions enqueues PromiseJobs with the provided PromiseReaction Records on _promise_. The result is _resultCapability_'s promise.</p>
+<emu-clause id="sec-createcatchfinally" aoid="CreateCatchFinally">
+	<h1>CreateCatchFinally ( _onFinally_ )</h1>
+	<p>The abstract operation CreateCatchFinally takes an _onFinally_ function, and returns a callback function for use in PerformPromiseFinally.</p>
 	<emu-alg>
-		1. Assert: IsPromise(_promise_) is *true*.
-		1. Assert: _resultCapability_ is a PromiseCapability Record.
-		1. Assert: _fulfillReaction_ is a PromiseReaction Record.
-		1. Assert: _rejectReaction_ is a PromiseReaction Record.
-		1. If _promise_.[[PromiseState]] is `"pending"`, then
-			1. Append _fulfillReaction_ as the last element of the List that is _promise_.[[PromiseFulfillReactions]].
-			1. Append _rejectReaction_ as the last element of the List that is _promise_.[[PromiseRejectReactions]].
-		1. Else if _promise_.[[PromiseState]] is `"fulfilled"`, then
-			1. Let _value_ be _promise_.[[PromiseResult]].
-			1. Perform EnqueueJob(`"PromiseJobs"`, PromiseReactionJob, &laquo; _fulfillReaction_, _value_ &raquo;).
-		1. Else,
-			1. Assert: _promise_.[[PromiseState]] is `"rejected"`.
-			1. Let _reason_ be _promise_.[[PromiseResult]].
-			1. If _promise_.[[PromiseIsHandled]] is *false*, perform HostPromiseRejectionTracker(_promise_, `"handle"`).
-			1. Perform EnqueueJob(`"PromiseJobs"`, PromiseReactionJob, &laquo; _rejectReaction_, _reason_ &raquo;).
-		1. Set _promise_.[[PromiseIsHandled]] to *true*.
-		1. Return _resultCapability_.[[Promise]].
+		1. Assert: IsCallable(_onFinally_) is *true*.
+		1. Return a function that takes one argument, _reason_, and when invoked, performs the following steps:
+			1. Let _result_ be ? Call(_onFinally_, *undefined*).
+			1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
+			1. Let _thrower_ be equivalent to a function that throws _reason_.
+			1. Let _promiseCapability_ be ! NewPromiseCapability(%Promise%).
+			1. Return PerformPromiseThen(_promise_, _thrower_, *undefined*, _promiseCapability_).
 	</emu-alg>
 </emu-clause>
 
@@ -135,6 +69,9 @@ contributors: Jordan Harband
 	<emu-alg>
 		1. Let _C_ be the *this* value.
 		1. If Type(_C_) is not Object, throw a *TypeError* exception.
+		1. If IsPromise(_x_) is *true*, then
+			1. Let _xConstructor_ be ? Get(_x_, `"constructor"`).
+			1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
 		1. Return ? PromiseResolve(_C_, _x_).
 	</emu-alg>
 	<emu-note>
@@ -147,41 +84,8 @@ contributors: Jordan Harband
 	<p>The abstract operation PromiseResolve, given a constructor and a value, returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
 	<emu-alg>
 		1. Assert: Type(_C_) is Object.
-		1. If IsPromise(_x_) is *true*, then
-			1. Let _xConstructor_ be ? Get(_x_, `"constructor"`).
-			1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
 		1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
 		1. Perform ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _x_ &raquo;).
 		1. Return _promiseCapability_.[[Promise]].
-	</emu-alg>
-</emu-clause>
-
-<!-- es6num="25.4.2.1" -->
-<emu-clause id="sec-promisereactionjob" aoid="PromiseReactionJob">
-	<h1>PromiseReactionJob ( _reaction_, _argument_ )</h1>
-	<p>The job PromiseReactionJob with parameters _reaction_ and _argument_ applies the appropriate handler to the incoming value, and uses the handler's return value to resolve or reject the derived promise associated with that handler.</p>
-	<emu-alg>
-		1. Assert: _reaction_ is a PromiseReaction Record.
-		1. Let _promiseCapability_ be _reaction_.[[Capability]].
-		1. Let _type_ be _reaction_.[[Type]].
-		1. Let _handler_ be _reaction_.[[Handler]].
-		1. If _handler_ is *undefined*, then
-			1. If _type_ is `"Fulfill"`, let _handlerResult_ be NormalCompletion(_argument_).
-			1. Else if _type_ is `"Reject"`, let _handlerResult_ be Completion{[[Type]]: ~throw~, [[Value]]: _argument_, [[Target]]: ~empty~}.
-			1. Else if _type_ is `"Finally"`, let _handlerResult_ be NormalCompletion(_argument_).
-			1. Assert: _handlerResult_ is defined.
-		1. Else if _type_ is `"Finally"`, then
-			1. let _handlerResult_ be Call(_handler_, *undefined*, &laquo; &raquo;).
-			1. If _handlerResult_ is not an abrupt completion, then
-				1. Let _handlerPromise_ be ? PromiseResolve(%Promise%, _handlerResult_.[[Value]]).
-				1. Let _argumentThunk_ be equivalent to a function that returns _argument_.
-				1. Let _finalCapability_ be ? NewPromiseCapability(%Promise%).
-				1. Return ? PerformPromiseThen(_handlerPromise_, _argumentThunk_, *undefined*, _finalCapability_).
-		1. Else, let _handlerResult_ be Call(_handler_, *undefined*, &laquo; _argument_ &raquo;).
-		1. If _handlerResult_ is an abrupt completion, then
-			1. Let _status_ be Call(_promiseCapability_.[[Reject]], *undefined*, &laquo; _handlerResult_.[[Value]] &raquo;).
-		1. Else,
-			1. Let _status_ be Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _handlerResult_.[[Value]] &raquo;).
-		1. Return Completion(_status_).
 	</emu-alg>
 </emu-clause>
