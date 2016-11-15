@@ -1,0 +1,18 @@
+language: node_js
+node_js:
+  - "node"
+before_install:
+  - 'if [ "${TRAVIS_NODE_VERSION}" != "0.9" ]; then case "$(npm --version)" in 1.*) npm install -g npm@1.4.28 ;; 2.*) npm install -g npm@2 ;; esac ; fi'
+  - 'if [ "${TRAVIS_NODE_VERSION}" != "0.6" ] && [ "${TRAVIS_NODE_VERSION}" != "0.9" ]; then npm install -g npm; fi'
+script:
+  - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
+  - 'if [ -n "${POSTTEST-}" ]; then npm run posttest ; fi'
+  - 'if [ -n "${COVERAGE-}" ]; then npm run coverage ; fi'
+  - 'if [ -n "${TEST-}" ]; then npm run tests-only ; fi'
+sudo: false
+env:
+  - TEST=true
+matrix:
+  fast_finish: true
+  include:
+  allow_failures:

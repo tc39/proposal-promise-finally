@@ -5,7 +5,8 @@
 	"scripts": {
 		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -t > index.html",
 		"prepublish": "in-install || (npm run build && not-in-publish || (echo >&2 'no publishing' && exit 255))",
-		"test": "npm run test:aplus && npm run test:finally",
+		"test": "npm run tests-only",
+		"tests-only": "npm run test:aplus && npm run test:finally",
 		"test:aplus": "promises-aplus-tests test/adapter",
 		"test:finally": "mocha test/test"
 	},
