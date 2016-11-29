@@ -510,9 +510,10 @@ PromiseIntrinsic = class Promise {
 			throw new TypeError('Promise.prototype.finally only works on real promises');
 		}
 
-		const C = SpeciesConstructor(promise, Promise);
-		const resultCapability = NewPromiseCapability(C);
-		return PerformPromiseFinally(promise, onFinally, resultCapability);
+		const thenFinally = CreateThenFinally(onFinally);
+		const catchFinally = CreateCatchFinally(onFinally);
+
+		return promise.then(thenFinally, catchFinally);
 	}
 }
 
@@ -552,7 +553,9 @@ function PerformPromiseFinally(promise, onFinally, resultCapability) {
 }
 
 function CreateThenFinally(onFinally) {
-	assert(IsCallable(onFinally) === true);
+	if (IsCallable(onFinally) !== true) {
+		return onFinally;
+	}
 
 	return (value) => {
 		const result = onFinally();
@@ -564,7 +567,9 @@ function CreateThenFinally(onFinally) {
 }
 
 function CreateCatchFinally(onFinally) {
-	assert(IsCallable(onFinally) === true);
+	if (IsCallable(onFinally) !== true) {
+		return onFinally;
+	}
 
 	return (reason) => {
 		const result = onFinally();
