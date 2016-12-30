@@ -4,10 +4,9 @@ if (typeof Promise !== 'function') {
 
 if (typeof Promise.prototype.finally !== 'function') {
 	var speciesConstructor = function (O, defaultConstructor) {
-		var C = typeof O.constructor === 'undefined' ? defaultConstructor : O.constructor;
-		var S = C[Symbol.species];
-		return S == null ? defaultConstructor : S;
-
+		if (!O || (typeof O !== 'object' && typeof O !== 'function')) {
+			throw new TypeError('Assertion failed: Type(O) is not Object');
+		}
 		var C = O.constructor;
 		if (typeof C === 'undefined') {
 			return defaultConstructor;
@@ -15,7 +14,7 @@ if (typeof Promise.prototype.finally !== 'function') {
 		if (!C || (typeof C !== 'object' && typeof C !== 'function')) {
 			throw new TypeError('O.constructor is not an Object');
 		}
-		var S = C[Symbol.species];
+		var S = typeof Symbol === 'function' && typeof Symbol.species === 'symbol' ? C[Symbol.species] : undefined;
 		if (S == null) {
 			return defaultConstructor;
 		}
@@ -24,6 +23,7 @@ if (typeof Promise.prototype.finally !== 'function') {
 		}
 		throw new TypeError('no constructor found');
 	};
+
 	var shim = {
 		finally(onFinally) {
 			var handler = typeof onFinally === 'function' ? onFinally : () => {};
