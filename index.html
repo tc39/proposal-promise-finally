@@ -19,22 +19,6 @@
 			"key": "Promise.prototype.finally ( onFinally )"
 		}, {
 			"type": "op",
-			"aoid": "PerformPromiseFinally",
-			"refId": "sec-performpromisefinally",
-			"location": "",
-			"key": "PerformPromiseFinally"
-		}, {
-			"type": "clause",
-			"id": "sec-performpromisefinally",
-			"aoid": "PerformPromiseFinally",
-			"title": "PerformPromiseFinally ( promise, onFinally, resultCapability )",
-			"titleHTML": "PerformPromiseFinally ( <var>promise</var>, <var>onFinally</var>, <var>resultCapability</var> )",
-			"number": "2",
-			"namespace": "<no location>",
-			"location": "",
-			"key": "PerformPromiseFinally ( promise, onFinally, resultCapability )"
-		}, {
-			"type": "op",
 			"aoid": "CreateThenFinally",
 			"refId": "sec-createthenfinally",
 			"location": "",
@@ -45,7 +29,7 @@
 			"aoid": "CreateThenFinally",
 			"title": "CreateThenFinally ( onFinally )",
 			"titleHTML": "CreateThenFinally ( <var>onFinally</var> )",
-			"number": "3",
+			"number": "2",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "CreateThenFinally ( onFinally )"
@@ -61,7 +45,7 @@
 			"aoid": "CreateCatchFinally",
 			"title": "CreateCatchFinally ( onFinally )",
 			"titleHTML": "CreateCatchFinally ( <var>onFinally</var> )",
-			"number": "4",
+			"number": "3",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "CreateCatchFinally ( onFinally )"
@@ -71,7 +55,7 @@
 			"aoid": null,
 			"title": "Promise.resolve ( x )",
 			"titleHTML": "Promise.resolve ( <var>x</var> )",
-			"number": "5",
+			"number": "4",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "Promise.resolve ( x )"
@@ -87,7 +71,7 @@
 			"aoid": "PromiseResolve",
 			"title": "PromiseResolve ( C, x )",
 			"titleHTML": "PromiseResolve ( <var>C</var>, <var>x</var> )",
-			"number": "6",
+			"number": "5",
 			"namespace": "<no location>",
 			"location": "",
 			"key": "PromiseResolve ( C, x )"
@@ -120,11 +104,10 @@
 		<div id="menu-toc">
 			<ol class="toc">
 				<li><span class="item-toggle-none"></span><a href="#sec-promise.prototype.finally" title="Promise.prototype.finally ( onFinally )"><span class="secnum">1</span> Promise.prototype.finally ( <var>onFinally</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-performpromisefinally" title="PerformPromiseFinally ( promise, onFinally, resultCapability )"><span class="secnum">2</span> PerformPromiseFinally ( <var>promise</var>, <var>onFinally</var>, <var>resultCapability</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-createthenfinally" title="CreateThenFinally ( onFinally )"><span class="secnum">3</span> CreateThenFinally ( <var>onFinally</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-createcatchfinally" title="CreateCatchFinally ( onFinally )"><span class="secnum">4</span> CreateCatchFinally ( <var>onFinally</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-promise.resolve" title="Promise.resolve ( x )"><span class="secnum">5</span> Promise.resolve ( <var>x</var> )</a></li>
-				<li><span class="item-toggle-none"></span><a href="#sec-promise-resolve" title="PromiseResolve ( C, x )"><span class="secnum">6</span> PromiseResolve ( <var>C</var>, <var>x</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-createthenfinally" title="CreateThenFinally ( onFinally )"><span class="secnum">2</span> CreateThenFinally ( <var>onFinally</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-createcatchfinally" title="CreateCatchFinally ( onFinally )"><span class="secnum">3</span> CreateCatchFinally ( <var>onFinally</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-promise.resolve" title="Promise.resolve ( x )"><span class="secnum">4</span> Promise.resolve ( <var>x</var> )</a></li>
+				<li><span class="item-toggle-none"></span><a href="#sec-promise-resolve" title="PromiseResolve ( C, x )"><span class="secnum">5</span> PromiseResolve ( <var>C</var>, <var>x</var> )</a></li>
 				<li><span class="item-toggle-none"></span><a href="#sec-copyright-and-software-license" title="Copyright &amp; Software License"><span class="secnum">A</span> Copyright &amp; Software License</a></li>
 			</ol>
 		</div>
@@ -145,56 +128,27 @@
 						<emu-xref aoid="IsPromise"><a href="https://tc39.github.io/ecma262/#sec-ispromise">IsPromise</a></emu-xref>(<var>promise</var>) is
 						<emu-val>false</emu-val>, throw a
 						<emu-val>TypeError</emu-val> exception.</li>
-					<li>Let <var>C</var> be ?
-						<emu-xref aoid="SpeciesConstructor"><a href="https://tc39.github.io/ecma262/#sec-speciesconstructor">SpeciesConstructor</a></emu-xref>(<var>promise</var>,
-						<emu-xref href="#sec-promise-constructor"><a href="https://tc39.github.io/ecma262/#sec-promise-constructor">%Promise%</a></emu-xref>).</li>
-					<li>Let <var>resultCapability</var> be ?
-						<emu-xref aoid="NewPromiseCapability"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(<var>C</var>).</li>
-					<li>Return
-						<emu-xref aoid="PerformPromiseFinally"><a href="#sec-performpromisefinally">PerformPromiseFinally</a></emu-xref>(<var>promise</var>, <var>onFinally</var>, <var>resultCapability</var>).
-					</li>
-				</ol>
-			</emu-alg>
-		</emu-clause>
-
-		<emu-clause id="sec-performpromisefinally" aoid="PerformPromiseFinally">
-			<h1><span class="secnum">2</span>PerformPromiseFinally ( <var>promise</var>, <var>onFinally</var>, <var>resultCapability</var> )<span class="utils"><span class="anchor"><a href="#sec-performpromisefinally">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
-			</h1>
-			<p>The abstract operation PerformPromiseFinally performs the “finally” operation on <var>promise</var> using <var>onFinally</var> as its settlement actions. The result is <var>resultCapability</var>'s promise.</p>
-			<emu-alg>
-				<ol>
-					<li>Assert:
-						<emu-xref aoid="IsPromise"><a href="https://tc39.github.io/ecma262/#sec-ispromise">IsPromise</a></emu-xref>(<var>promise</var>) is
-						<emu-val>true</emu-val>.</li>
-					<li>Assert: <var>resultCapability</var> is a PromiseCapability
-						<emu-xref href="#sec-list-and-record-specification-type"><a href="https://tc39.github.io/ecma262/#sec-list-and-record-specification-type">Record</a></emu-xref>.</li>
-					<li>If
-						<emu-xref aoid="IsCallable"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
-						<emu-val>false</emu-val>, then return
-						<emu-xref aoid="PerformPromiseThen"><a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a></emu-xref>(<var>promise</var>,
-						<emu-val>undefined</emu-val>,
-						<emu-val>undefined</emu-val>, <var>resultCapability</var>);</li>
 					<li>Let <var>thenFinally</var> be !
 						<emu-xref aoid="CreateThenFinally"><a href="#sec-createthenfinally">CreateThenFinally</a></emu-xref>(<var>onFinally</var>).</li>
 					<li>Let <var>catchFinally</var> be !
 						<emu-xref aoid="CreateCatchFinally"><a href="#sec-createcatchfinally">CreateCatchFinally</a></emu-xref>(<var>onFinally</var>).</li>
-					<li>Return
-						<emu-xref aoid="PerformPromiseThen"><a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a></emu-xref>(<var>promise</var>, <var>thenFinally</var>, <var>catchFinally</var>, <var>resultCapability</var>).
+					<li>Return ?
+						<emu-xref aoid="Invoke"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>promise</var>,
+						<emu-val>"then"</emu-val>, « <var>thenFinally</var>, <var>catchFinally</var> »).
 					</li>
 				</ol>
 			</emu-alg>
 		</emu-clause>
 
 		<emu-clause id="sec-createthenfinally" aoid="CreateThenFinally">
-			<h1><span class="secnum">3</span>CreateThenFinally ( <var>onFinally</var> )<span class="utils"><span class="anchor"><a href="#sec-createthenfinally">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
+			<h1><span class="secnum">2</span>CreateThenFinally ( <var>onFinally</var> )<span class="utils"><span class="anchor"><a href="#sec-createthenfinally">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
 			</h1>
-			<p>The abstract operation CreateThenFinally takes an <var>onFinally</var> function, and returns a callback function for use in
-				<emu-xref aoid="PerformPromiseFinally"><a href="#sec-performpromisefinally">PerformPromiseFinally</a></emu-xref>.</p>
+			<p>The abstract operation CreateThenFinally takes an <var>onFinally</var> function, and returns a callback function for use in Promise.prototype.finally.</p>
 			<emu-alg>
 				<ol>
-					<li>Assert:
-						<emu-xref aoid="IsCallable"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
-						<emu-val>true</emu-val>.</li>
+					<li>If
+						<emu-xref aoid="IsCallable"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is not
+						<emu-val>true</emu-val>, return <var>onFinally</var>.</li>
 					<li>Return a function that takes one argument, <var>value</var>, and when invoked, performs the following steps:
 						<ol>
 							<li>Let <var>result</var> be ?
@@ -218,15 +172,15 @@
 		</emu-clause>
 
 		<emu-clause id="sec-createcatchfinally" aoid="CreateCatchFinally">
-			<h1><span class="secnum">4</span>CreateCatchFinally ( <var>onFinally</var> )<span class="utils"><span class="anchor"><a href="#sec-createcatchfinally">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
+			<h1><span class="secnum">3</span>CreateCatchFinally ( <var>onFinally</var> )<span class="utils"><span class="anchor"><a href="#sec-createcatchfinally">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
 			</h1>
-			<p>The abstract operation CreateCatchFinally takes an <var>onFinally</var> function, and returns a callback function for use in
-				<emu-xref aoid="PerformPromiseFinally"><a href="#sec-performpromisefinally">PerformPromiseFinally</a></emu-xref>.</p>
+			<p>The abstract operation
+				<emu-xref aoid="CreateThenFinally"><a href="#sec-createthenfinally">CreateThenFinally</a></emu-xref> takes an <var>onFinally</var> function, and returns a callback function for use in Promise.prototype.finally.</p>
 			<emu-alg>
 				<ol>
-					<li>Assert:
-						<emu-xref aoid="IsCallable"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
-						<emu-val>true</emu-val>.</li>
+					<li>If
+						<emu-xref aoid="IsCallable"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is not
+						<emu-val>true</emu-val>, return <var>onFinally</var>.</li>
 					<li>Return a function that takes one argument, <var>reason</var>, and when invoked, performs the following steps:
 						<ol>
 							<li>Let <var>result</var> be ?
@@ -251,7 +205,7 @@
 
 		<!-- es6num="25.4.4.5" -->
 		<emu-clause id="sec-promise.resolve">
-			<h1><span class="secnum">5</span>Promise.resolve ( <var>x</var> )<span class="utils"><span class="anchor"><a href="#sec-promise.resolve">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
+			<h1><span class="secnum">4</span>Promise.resolve ( <var>x</var> )<span class="utils"><span class="anchor"><a href="#sec-promise.resolve">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
 			</h1>
 			<p>The <code>resolve</code> function returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
 			<emu-alg>
@@ -284,7 +238,7 @@
 		</emu-clause>
 
 		<emu-clause id="sec-promise-resolve" aoid="PromiseResolve">
-			<h1><span class="secnum">6</span>PromiseResolve ( <var>C</var>, <var>x</var> )<span class="utils"><span class="anchor"><a href="#sec-promise-resolve">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
+			<h1><span class="secnum">5</span>PromiseResolve ( <var>C</var>, <var>x</var> )<span class="utils"><span class="anchor"><a href="#sec-promise-resolve">link</a></span><span class="anchor"><a href="#" class="utils-pin">pin</a></span></span>
 			</h1>
 			<p>The abstract operation PromiseResolve, given a constructor and a value, returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
 			<emu-alg>

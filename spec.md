@@ -3,24 +3,14 @@
 When the `finally` method is called with argument _onFinally_, the following steps are taken:
   1. Let _promise_ be the **this** value.
   1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ispromise">IsPromise</a>(_promise_) is **false**, throw a **TypeError** exception.
-  1. Let _C_ be ? <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-speciesconstructor">SpeciesConstructor</a>(_promise_, %Promise%).
-  1. Let _resultCapability_ be ? <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-newpromisecapability">NewPromiseCapability</a>(_C_).
-  1. Return <a href="#performpromisefinally--promise-onfinally-resultcapability-">PerformPromiseFinally</a>(_promise_, _onFinally_, _resultCapability_).
-
-## PerformPromiseFinally ( _promise_, _onFinally_, _resultCapability_ )
-
-The abstract operation PerformPromiseFinally performs the &ldquo;finally&rdquo; operation on _promise_ using _onFinally_ as its settlement actions. The result is _resultCapability_'s promise.
-  1. Assert: IsPromise(_promise_) is **true**.
-  1. Assert: _resultCapability_ is a PromiseCapability Record.
-  1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-iscallable">IsCallable</a>(_onFinally_) is **false**, then return <a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a>(_promise_, **undefined**, **undefined**, _resultCapability_).
-  1. Let _thenFinally_ be CreateThenFinally(_onFinally_).
-  1. Let _catchFinally_ be CreateCatchFinally(_onFinally_).
-  1. Return <a href="https://tc39.github.io/ecma262/#sec-performpromisethen">PerformPromiseThen</a>(_promise_, _thenFinally_, _catchFinally_, _resultCapability_).
+  1. Let _thenFinally_ be ! CreateThenFinally(_onFinally_).
+  1. Let _catchFinally_ be ! CreateCatchFinally(_onFinally_).
+  1. Return ? <a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a>(_promise_, *"then"*, &laquo; _thenFinally_, _catchFinally_ &raquo;).
 
 ## CreateThenFinally ( _onFinally_ )
 
-The abstract operation CreateThenFinally takes an _onFinally_ function, and returns a callback function for use in PerformPromiseFinally.
-  1. Assert: IsCallable(_onFinally_) is *true*.
+The abstract operation CreateCatchFinally takes an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.
+  1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not **true**, return _onFinally_.
   1. Return a function that takes one argument, _value_, and when invoked, performs the following steps:
     1. Let _result_ be ? Call(_onFinally_, *undefined*).
     1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
@@ -30,8 +20,8 @@ The abstract operation CreateThenFinally takes an _onFinally_ function, and retu
 
 ## CreateCatchFinally ( _onFinally_ )
 
-The abstract operation CreateCatchFinally takes an _onFinally_ function, and returns a callback function for use in PerformPromiseFinally.
-  1. Assert: IsCallable(_onFinally_) is *true*.
+The abstract operation CreateCatchFinally takes an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.
+  1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not **true**, return _onFinally_.
   1. Return a function that takes one argument, _reason_, and when invoked, performs the following steps:
     1. Let _result_ be ? Call(_onFinally_, *undefined*).
     1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).

@@ -15,30 +15,17 @@ contributors: Jordan Harband
 	<emu-alg>
 		1. Let _promise_ be the *this* value.
 		1. If IsPromise(_promise_) is *false*, throw a *TypeError* exception.
-		1. Let _C_ be ? SpeciesConstructor(_promise_, %Promise%).
-		1. Let _resultCapability_ be ? NewPromiseCapability(_C_).
-		1. Return PerformPromiseFinally(_promise_, _onFinally_, _resultCapability_).
-	</emu-alg>
-</emu-clause>
-
-<emu-clause id="sec-performpromisefinally" aoid="PerformPromiseFinally">
-	<h1>PerformPromiseFinally ( _promise_, _onFinally_, _resultCapability_ )</h1>
-	<p>The abstract operation PerformPromiseFinally performs the &ldquo;finally&rdquo; operation on _promise_ using _onFinally_ as its settlement actions. The result is _resultCapability_'s promise.</p>
-	<emu-alg>
-		1. Assert: IsPromise(_promise_) is *true*.
-		1. Assert: _resultCapability_ is a PromiseCapability Record.
-		1. If IsCallable(_onFinally_) is *false*, then return PerformPromiseThen(_promise_, *undefined*, *undefined*, _resultCapability_);
 		1. Let _thenFinally_ be ! CreateThenFinally(_onFinally_).
 		1. Let _catchFinally_ be ! CreateCatchFinally(_onFinally_).
-		1. Return PerformPromiseThen(_promise_, _thenFinally_, _catchFinally_, _resultCapability_).
+		1. Return ? Invoke(_promise_, *"then"*, &laquo; _thenFinally_, _catchFinally_ &raquo;).
 	</emu-alg>
 </emu-clause>
 
 <emu-clause id="sec-createthenfinally" aoid="CreateThenFinally">
 	<h1>CreateThenFinally ( _onFinally_ )</h1>
-	<p>The abstract operation CreateThenFinally takes an _onFinally_ function, and returns a callback function for use in PerformPromiseFinally.</p>
+	<p>The abstract operation CreateThenFinally takes an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.</p>
 	<emu-alg>
-		1. Assert: IsCallable(_onFinally_) is *true*.
+		1. If IsCallable(_onFinally_) is not *true*, return _onFinally_.
 		1. Return a function that takes one argument, _value_, and when invoked, performs the following steps:
 			1. Let _result_ be ? Call(_onFinally_, *undefined*).
 			1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
@@ -50,9 +37,9 @@ contributors: Jordan Harband
 
 <emu-clause id="sec-createcatchfinally" aoid="CreateCatchFinally">
 	<h1>CreateCatchFinally ( _onFinally_ )</h1>
-	<p>The abstract operation CreateCatchFinally takes an _onFinally_ function, and returns a callback function for use in PerformPromiseFinally.</p>
+	<p>The abstract operation CreateThenFinally takes an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.</p>
 	<emu-alg>
-		1. Assert: IsCallable(_onFinally_) is *true*.
+		1. If IsCallable(_onFinally_) is not *true*, return _onFinally_.
 		1. Return a function that takes one argument, _reason_, and when invoked, performs the following steps:
 			1. Let _result_ be ? Call(_onFinally_, *undefined*).
 			1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
