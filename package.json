@@ -36,9 +36,9 @@
 		"especially": "^2.0.1"
 	},
 	"devDependencies": {
-		"ecmarkup": "^3.7.2",
+		"ecmarkup": "^3.11.2",
 		"in-publish": "^2.0.0",
-		"js-beautify": "^1.6.4",
+		"js-beautify": "^1.6.8",
 		"mocha": "^3.2.0",
 		"promises-aplus-tests": "^2.1.2"
 	}
