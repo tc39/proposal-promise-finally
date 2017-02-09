@@ -37,5 +37,5 @@ if (typeof Promise.prototype.finally !== 'function') {
 			return newPromise;
 		}
 	};
-	Promise.prototype.finally = shim.finally;
+	Object.defineProperty(Promise.prototype, 'finally', { configurable: true, writable: true, value: shim.finally });
 }
