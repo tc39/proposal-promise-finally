@@ -296,4 +296,12 @@ describe('onFinally', () => {
 				});
 		});
 	});
+
+	specify('has the correct property descriptor', () => {
+		var descriptor = Object.getOwnPropertyDescriptor(P.prototype, 'finally');
+
+		assert.strictEqual(descriptor.writable, true);
+		assert.strictEqual(descriptor.configurable, true);
+		assert.strictEqual(descriptor.enumerable, false);
+	});
 });
