@@ -68,7 +68,7 @@ contributors: Jordan Harband
 
 <emu-clause id="sec-promise-resolve" aoid="PromiseResolve">
 	<h1>PromiseResolve ( _C_, _x_ )</h1>
-	<p>The abstract operation PromiseResolve, given a constructor and a value, returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.</p>
+	<p>The abstract operation PromiseResolve, given a constructor and a value, returns a new promise resolved with that value.</p>
 	<emu-alg>
 		1. Assert: Type(_C_) is Object.
 		1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
