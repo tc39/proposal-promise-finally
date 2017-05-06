@@ -29,4 +29,4 @@ I’d briefly considered `always` as an alternative, since that wouldn’t imply
  - [jQuery jqXHR#always](http://api.jquery.com/jQuery.ajax/#jqXHR)
 
 ## Spec
-You can view the spec in [markdown format](spec.md) or rendered as [HTML](http://ljharb.github.io/proposal-promise-finally/).
+You can view the spec in [markdown format](spec.md) or rendered as [HTML](https://tc39.github.io/proposal-promise-finally/).

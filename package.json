@@ -12,7 +12,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/ljharb/proposal-promise-finally.git"
+		"url": "git+https://github.com/tc39/proposal-promise-finally.git"
 	},
 	"keywords": [
 		"promise",
@@ -29,9 +29,9 @@
 	"author": "Jordan Harband <ljharb@gmail.com>",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/ljharb/proposal-promise-finally/issues"
+		"url": "https://github.com/tc39/proposal-promise-finally/issues"
 	},
-	"homepage": "https://github.com/ljharb/proposal-promise-finally#readme",
+	"homepage": "https://github.com/tc39/proposal-promise-finally#readme",
 	"dependencies": {
 		"especially": "^2.0.1"
 	},
