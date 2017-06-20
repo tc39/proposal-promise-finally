@@ -9,25 +9,38 @@ When the `finally` method is called with argument _onFinally_, the following ste
 
 ## CreateThenFinally ( _onFinally_ )
 
-The abstract operation CreateCatchFinally takes an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.
-  1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not **true**, return _onFinally_.
-  1. Return a function that takes one argument, _value_, and when invoked, performs the following steps:
-    1. Let _result_ be ? Call(_onFinally_, *undefined*).
-    1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
-    1. Let _valueThunk_ be equivalent to a function that returns _value_.
-    1. Let _promiseCapability_ be ! NewPromiseCapability(%Promise%).
-    1. Return PerformPromiseThen(_promise_, _valueThunk_, *undefined*, _promiseCapability_).
+The abstract operation CreateThenFinally takes a Promise Constructor _C_, and an _onFinally_ function, and returns a callback function for use in `Promise.prototype.finally`.
+
+  1. Assert: IsConstructor(_C_) is *true*.
+  1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not *true*, return _onFinally_.
+  1. Let _thenFinally_ be a new built-in function object as defined in ThenFinally Function.
+  1. Set _thenFinally_.[[Constructor]] to _C_.
+  1. Set _thenFinally_.[[onFinally]] to _onFinally_.
+  1. Return _thenFinally_.
+
+## ThenFinally Function
+
+A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[onFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[onFinally]] internal slot is a function object.
+
+When a ThenFinally function _F_ is called with argument _value_, the following steps are taken:
+  1. Let _onFinally_ be _F_.[[onFinally]].
+  1. Assert: <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is *true*.
+  1. Let _result_ be ? Call(_onFinally_, *undefined*).
+  1. Let _C_ be _F_.[[Constructor]].
+  1. Assert: IsConstructor(_C_) is *true*.
+  1. Let _promise_ be ! PromiseResolve(_C_, _result_).
+  1. Let _valueThunk_ be equivalent to a function that returns _value_.
+  1. Return ? Invoke(_promise_, `"then"`, &laquo; _valueThunk_, *undefined* &raquo;).
 
 ## CreateCatchFinally ( _onFinally_ )
 
-The abstract operation CreateCatchFinally takes an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.
-  1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not **true**, return _onFinally_.
-  1. Return a function that takes one argument, _reason_, and when invoked, performs the following steps:
-    1. Let _result_ be ? Call(_onFinally_, *undefined*).
-    1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
-    1. Let _thrower_ be equivalent to a function that throws _reason_.
-    1. Let _promiseCapability_ be ! NewPromiseCapability(%Promise%).
-    1. Return PerformPromiseThen(_promise_, _thrower_, *undefined*, _promiseCapability_).
+The abstract operation CreateCatchFinally takes a Promise Constructor _C_, and an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.
+  1. Assert: IsConstructor(_C_) is *true*.
+  1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not *true*, return _onFinally_.
+  1. Let _catchFinally_ be a new built-in function object as defined in CatchFinally Function.
+  1. Set _catchFinally_.[[Constructor]] to _C_.
+  1. Set _catchFinally_.[[onFinally]] to _onFinally_.
+  1. Return _catchFinally_.
 
 ## Promise.resolve ( _x_ )
 
