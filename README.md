@@ -18,7 +18,7 @@ Many promise libraries have a "finally" method, for registering a callback to be
 However, please note: a `throw` (or returning a rejected promise) in the `finally` callback will reject the new promise with that rejection reason.
 
 ## Naming
-The reasons to stick with `finally` are straightforward: just like `catch`, `finally` would be an analog to the similarly-named syntactic forms from `try`/`catch`/`finally` (`try`, of course, not really having an analog any closer than `Promise.resolve().then`). Just like syntactic `finally`, `Promise#finally` would not be able to modify the return value, except by creating an abrupt completion by throwing an exception (ie, rejecting the promise).
+The reasons to stick with `finally` are straightforward: just like `catch`, `finally` would be an analog to the similarly-named syntactic forms from `try`/`catch`/`finally` (`try`, of course, not really having an analog any closer than `Promise.resolve().then`). Syntactic finally can only modify the return value with an “abrupt completion”: either throwing an exception, or returning a value early. `Promise#finally` will not be able to modify the return value, except by creating an abrupt completion by throwing an exception (ie, rejecting the promise) - since there is no way to distinguish between a “normal completion” and an early `return undefined`, the parallel with syntactic finally must have a slight consistency gap.
 
 I’d briefly considered `always` as an alternative, since that wouldn’t imply ordering, but I think the parallels to the syntactic variation are compelling.
 
