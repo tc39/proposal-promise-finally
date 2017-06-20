@@ -15,9 +15,9 @@ contributors: Jordan Harband
 	<emu-alg>
 		1. Let _promise_ be the *this* value.
 		1. If IsPromise(_promise_) is *false*, throw a *TypeError* exception.
-		1. Let _thenFinally_ be !CreateThenFinally(_onFinally_).
-		1. Let _catchFinally_ be !CreateCatchFinally(_onFinally_).
-		1. Return ?Invoke(_promise_, `"then"`, &laquo; _thenFinally_, _catchFinally_ &raquo;).
+		1. Let _thenFinally_ be ! CreateThenFinally(_onFinally_).
+		1. Let _catchFinally_ be ! CreateCatchFinally(_onFinally_).
+		1. Return ? Invoke(_promise_, `"then"`, &laquo; _thenFinally_, _catchFinally_ &raquo;).
 	</emu-alg>
 </emu-clause>
 
@@ -27,10 +27,10 @@ contributors: Jordan Harband
 	<emu-alg>
 		1. If IsCallable(_onFinally_) is not *true*, return _onFinally_.
 		1. Return a function that takes one argument, _value_, and when invoked, performs the following steps:
-			1. Let _result_ be ?Call(_onFinally_, *undefined*).
-			1. Let _promise_ be !PromiseResolve(%Promise%, _result_).
+			1. Let _result_ be ? Call(_onFinally_, *undefined*).
+			1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
 			1. Let _valueThunk_ be equivalent to a function that returns _value_.
-			1. Let _promiseCapability_ be !NewPromiseCapability(%Promise%).
+			1. Let _promiseCapability_ be ! NewPromiseCapability(%Promise%).
 			1. Return PerformPromiseThen(_promise_, _valueThunk_, *undefined*, _promiseCapability_).
 	</emu-alg>
 </emu-clause>
@@ -41,10 +41,10 @@ contributors: Jordan Harband
 	<emu-alg>
 		1. If IsCallable(_onFinally_) is not *true*, return _onFinally_.
 		1. Return a function that takes one argument, _reason_, and when invoked, performs the following steps:
-			1. Let _result_ be ?Call(_onFinally_, *undefined*).
-			1. Let _promise_ be !PromiseResolve(%Promise%, _result_).
+			1. Let _result_ be ? Call(_onFinally_, *undefined*).
+			1. Let _promise_ be ! PromiseResolve(%Promise%, _result_).
 			1. Let _thrower_ be equivalent to a function that throws _reason_.
-			1. Let _promiseCapability_ be !NewPromiseCapability(%Promise%).
+			1. Let _promiseCapability_ be ! NewPromiseCapability(%Promise%).
 			1. Return PerformPromiseThen(_promise_, _thrower_, *undefined*, _promiseCapability_).
 	</emu-alg>
 </emu-clause>
@@ -57,9 +57,9 @@ contributors: Jordan Harband
 		1. Let _C_ be the *this* value.
 		1. If Type(_C_) is not Object, throw a *TypeError* exception.
 		1. If IsPromise(_x_) is *true*, then
-			1. Let _xConstructor_ be ?Get(_x_, `"constructor"`).
+			1. Let _xConstructor_ be ? Get(_x_, `"constructor"`).
 			1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
-		1. Return ?PromiseResolve(_C_, _x_).
+		1. Return ? PromiseResolve(_C_, _x_).
 	</emu-alg>
 	<emu-note>
 		<p>The `resolve` function expects its *this* value to be a constructor function that supports the parameter conventions of the `Promise` constructor.</p>
@@ -71,8 +71,8 @@ contributors: Jordan Harband
 	<p>The abstract operation PromiseResolve, given a constructor and a value, returns a new promise resolved with that value.</p>
 	<emu-alg>
 		1. Assert: Type(_C_) is Object.
-		1. Let _promiseCapability_ be ?NewPromiseCapability(_C_).
-		1. Perform ?Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _x_ &raquo;).
+		1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
+		1. Perform ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _x_ &raquo;).
 		1. Return _promiseCapability_.[[Promise]].
 	</emu-alg>
 </emu-clause>

@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"description": "ECMAScript spec proposal for Promise#finally",
 	"scripts": {
-		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -t > index.html",
+		"build": "ecmarkup spec.emu --js=spec.js --css=spec.css | js-beautify -f - --type=html -w 0 -n -t | sed -e 's/&nbsp;/ /g' -e 's/[[:space:]]*$//' > index.html",
 		"prepublish": "in-install || (npm run build && not-in-publish || (echo >&2 'no publishing' && exit 255))",
 		"test": "npm run tests-only",
 		"tests-only": "npm run test:aplus && npm run test:finally",
