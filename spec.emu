@@ -17,7 +17,7 @@ contributors: Jordan Harband
 		1. If IsPromise(_promise_) is *false*, throw a *TypeError* exception.
 		1. Let _thenFinally_ be !CreateThenFinally(_onFinally_).
 		1. Let _catchFinally_ be !CreateCatchFinally(_onFinally_).
-		1. Return ?Invoke(_promise_, *"then"*, &laquo; _thenFinally_, _catchFinally_ &raquo;).
+		1. Return ?Invoke(_promise_, `"then"`, &laquo; _thenFinally_, _catchFinally_ &raquo;).
 	</emu-alg>
 </emu-clause>
 

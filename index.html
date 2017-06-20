@@ -2136,7 +2136,7 @@
 		</div>
 	</div>
 	<div id="spec-container">
-		<h1 class="version first">Stage 2 Draft / June 19, 2017</h1>
+		<h1 class="version first">Stage 2 Draft / June 20, 2017</h1>
 		<h1 class="title">Promise.prototype.finally</h1>
 
 		<emu-clause id="sec-promise.prototype.finally">
@@ -2155,8 +2155,7 @@
 					<li>Let <var>catchFinally</var> be !
 						<emu-xref aoid="CreateCatchFinally" id="_ref_2"><a href="#sec-createcatchfinally">CreateCatchFinally</a></emu-xref>(<var>onFinally</var>).</li>
 					<li>Return ?
-						<emu-xref aoid="Invoke" id="_ref_3"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>promise</var>,
-						<emu-val>"then"</emu-val>, « <var>thenFinally</var>, <var>catchFinally</var> »).
+						<emu-xref aoid="Invoke" id="_ref_3"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>promise</var>, <code>"then"</code>, « <var>thenFinally</var>, <var>catchFinally</var> »).
 					</li>
 				</ol>
 			</emu-alg>
