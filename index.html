@@ -2207,7 +2207,7 @@
 
 		<emu-clause id="sec-createthenfinally" aoid="CreateThenFinally">
 			<h1><span class="secnum">2</span>CreateThenFinally ( <var>C</var>, <var>onFinally</var> )</h1>
-			<p>The abstract operation CreateThenFinally takes a Promise Constructor <var>C</var>, and an <var>onFinally</var> function, and returns a callback function for use in Promise.prototype.finally.</p>
+			<p>The abstract operation CreateThenFinally takes a <code>Promise</code>-like constructor function <var>C</var>, and an <var>onFinally</var> function, and returns a callback function for use in Promise.prototype.finally.</p>
 			<emu-alg>
 				<ol>
 					<li>Assert:
@@ -2228,7 +2228,7 @@
 
 		<emu-clause id="sec-thenfinallyfunction" aoid="ThenFinallyFunction">
 			<h1><span class="secnum">3</span>ThenFinally Function</h1>
-			<p>A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
+			<p>A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a <code>Promise</code>-like constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
 			<p>When a ThenFinally function <var>F</var> is called with argument <var>value</var>, the following steps are taken:</p>
 			<emu-alg>
 				<ol>
@@ -2278,7 +2278,7 @@
 
 		<emu-clause id="sec-catchfinallyfunction" aoid="CatchFinallyFunction">
 			<h1><span class="secnum">5</span>CatchFinally Function</h1>
-			<p>A CatchFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
+			<p>A CatchFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a <code>Promise</code>-like constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
 			<p>When a CatchFinally function <var>F</var> is called with argument <var>value</var>, the following steps are taken:</p>
 			<emu-alg>
 				<ol>

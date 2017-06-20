@@ -20,7 +20,7 @@ The abstract operation CreateThenFinally takes a Promise Constructor _C_, and an
 
 ## ThenFinally Function
 
-A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[OnFinally]] internal slot is a function object.
+A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a `Promise`-like constructor function object, and the value of the [[OnFinally]] internal slot is a function object.
 
 When a ThenFinally function _F_ is called with argument _value_, the following steps are taken:
   1. Let _onFinally_ be _F_.[[OnFinally]].
@@ -34,7 +34,7 @@ When a ThenFinally function _F_ is called with argument _value_, the following s
 
 ## CreateCatchFinally ( _onFinally_ )
 
-The abstract operation CreateCatchFinally takes a Promise Constructor _C_, and an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.
+The abstract operation CreateCatchFinally takes a `Promise`-like constructor function _C_, and an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.
   1. Assert: IsConstructor(_C_) is *true*.
   1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not *true*, return _onFinally_.
   1. Let _catchFinally_ be a new built-in function object as defined in CatchFinally Function.

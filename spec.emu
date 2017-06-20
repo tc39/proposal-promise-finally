@@ -24,7 +24,7 @@ contributors: Jordan Harband
 
 <emu-clause id="sec-createthenfinally" aoid="CreateThenFinally">
 	<h1>CreateThenFinally ( _C_, _onFinally_ )</h1>
-	<p>The abstract operation CreateThenFinally takes a Promise Constructor _C_, and an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.</p>
+	<p>The abstract operation CreateThenFinally takes a `Promise`-like constructor function _C_, and an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.</p>
 	<emu-alg>
 		1. Assert: IsConstructor(_C_) is *true*.
 		1. If IsCallable(_onFinally_) is not *true*, return _onFinally_.
@@ -37,7 +37,7 @@ contributors: Jordan Harband
 
 <emu-clause id="sec-thenfinallyfunction" aoid="ThenFinallyFunction">
 	<h1>ThenFinally Function</h1>
-	<p>A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
+	<p>A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a `Promise`-like constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
 	<p>When a ThenFinally function _F_ is called with argument _value_, the following steps are taken:</p>
 	<emu-alg>
 		1. Let _onFinally_ be _F_.[[OnFinally]].
@@ -66,7 +66,7 @@ contributors: Jordan Harband
 
 <emu-clause id="sec-catchfinallyfunction" aoid="CatchFinallyFunction">
 	<h1>CatchFinally Function</h1>
-	<p>A CatchFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
+	<p>A CatchFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a `Promise`-like constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
 	<p>When a CatchFinally function _F_ is called with argument _value_, the following steps are taken:</p>
 	<emu-alg>
 		1. Let _onFinally_ be _F_.[[OnFinally]].
