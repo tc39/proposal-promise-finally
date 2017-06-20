@@ -77,7 +77,7 @@ function CreateThenFinally(C, onFinally) {
 	}
 
 	const ThenFinally = (value) => {
-		const onFinally = get_slot(ThenFinally, 'onFinally');
+		const onFinally = get_slot(ThenFinally, 'OnFinally');
 		assert(IsCallable(onFinally));
 
 		const result = onFinally();
@@ -91,10 +91,10 @@ function CreateThenFinally(C, onFinally) {
 	};
 
 	make_slots(ThenFinally, [
-		'onFinally',
+		'OnFinally',
 		'Constructor',
 	]);
-	set_slot(ThenFinally, 'onFinally', onFinally);
+	set_slot(ThenFinally, 'OnFinally', onFinally);
 	set_slot(ThenFinally, 'Constructor', C);
 
 	return ThenFinally;
@@ -108,7 +108,7 @@ function CreateCatchFinally(C, onFinally) {
 	}
 
 	const CatchFinally = (reason) => {
-		const onFinally = get_slot(CatchFinally, 'onFinally');
+		const onFinally = get_slot(CatchFinally, 'OnFinally');
 		assert(IsCallable(onFinally));
 
 		const result = onFinally();
@@ -122,10 +122,10 @@ function CreateCatchFinally(C, onFinally) {
 	};
 
 	make_slots(CatchFinally, [
-		'onFinally',
+		'OnFinally',
 		'Constructor',
 	]);
-	set_slot(CatchFinally, 'onFinally', onFinally);
+	set_slot(CatchFinally, 'OnFinally', onFinally);
 	set_slot(CatchFinally, 'Constructor', C);
 
 	return CatchFinally;

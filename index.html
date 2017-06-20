@@ -2219,7 +2219,7 @@
 					<li>Let <var>thenFinally</var> be a new built-in function object as defined in
 						<emu-xref href="#sec-thenfinallyfunction" id="_ref_0"><a href="#sec-thenfinallyfunction">ThenFinally Function</a></emu-xref>.</li>
 					<li>Set <var>thenFinally</var>.[[Constructor]] to <var>C</var>.</li>
-					<li>Set <var>thenFinally</var>.[[onFinally]] to <var>onFinally</var>.</li>
+					<li>Set <var>thenFinally</var>.[[OnFinally]] to <var>onFinally</var>.</li>
 					<li>Return <var>thenFinally</var>.
 					</li>
 				</ol>
@@ -2228,11 +2228,11 @@
 
 		<emu-clause id="sec-thenfinallyfunction" aoid="ThenFinallyFunction">
 			<h1><span class="secnum">3</span>ThenFinally Function</h1>
-			<p>A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[onFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[onFinally]] internal slot is a function object.</p>
+			<p>A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
 			<p>When a ThenFinally function <var>F</var> is called with argument <var>value</var>, the following steps are taken:</p>
 			<emu-alg>
 				<ol>
-					<li>Let <var>onFinally</var> be <var>F</var>.[[onFinally]].</li>
+					<li>Let <var>onFinally</var> be <var>F</var>.[[OnFinally]].</li>
 					<li>Assert:
 						<emu-xref aoid="IsCallable" id="_ref_9"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
 						<emu-val>true</emu-val>.</li>
@@ -2269,7 +2269,7 @@
 					<li>Let <var>catchFinally</var> be a new built-in function object as defined in
 						<emu-xref href="#sec-catchfinallyfunction" id="_ref_1"><a href="#sec-catchfinallyfunction">CatchFinally Function</a></emu-xref>.</li>
 					<li>Set <var>catchFinally</var>.[[Constructor]] to <var>C</var>.</li>
-					<li>Set <var>catchFinally</var>.[[onFinally]] to <var>onFinally</var>.</li>
+					<li>Set <var>catchFinally</var>.[[OnFinally]] to <var>onFinally</var>.</li>
 					<li>Return <var>catchFinally</var>.
 					</li>
 				</ol>
@@ -2278,11 +2278,11 @@
 
 		<emu-clause id="sec-catchfinallyfunction" aoid="CatchFinallyFunction">
 			<h1><span class="secnum">5</span>CatchFinally Function</h1>
-			<p>A CatchFinally function is an anonymous built-in function that has a [[Constructor]] and an [[onFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[onFinally]] internal slot is a function object.</p>
+			<p>A CatchFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a Promise constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
 			<p>When a CatchFinally function <var>F</var> is called with argument <var>value</var>, the following steps are taken:</p>
 			<emu-alg>
 				<ol>
-					<li>Let <var>onFinally</var> be <var>F</var>.[[onFinally]].</li>
+					<li>Let <var>onFinally</var> be <var>F</var>.[[OnFinally]].</li>
 					<li>Assert:
 						<emu-xref aoid="IsCallable" id="_ref_17"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
 						<emu-val>true</emu-val>.</li>
