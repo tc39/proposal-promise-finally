@@ -33,10 +33,24 @@ Object.assign(PromiseIntrinsic.prototype, {
 		}
 
 		const C = SpeciesConstructor(promise, PromiseIntrinsic);
-		const thenFinally = CreateThenFinally(C, onFinally);
-		const catchFinally = CreateCatchFinally(C, onFinally);
+		assert(IsConstructor(C));
 
-		return promise.then(thenFinally, catchFinally);
+		let thenFinally, catchFinally;
+		if (IsCallable(onFinally) !== true) {
+			thenFinally = onFinally;
+			catchFinally = onFinally;
+		} else {
+			thenFinally = new ThenFinallyFunction();
+			catchFinally = new CatchFinallyFunction();
+
+			set_slot(thenFinally, 'Constructor', C);
+			set_slot(catchFinally, 'Constructor', C);
+
+			set_slot(thenFinally, 'OnFinally', onFinally);
+			set_slot(catchFinally, 'OnFinally', onFinally);
+		}
+
+		return Invoke(promise, 'then', [thenFinally, catchFinally]);
 	}
 });
 Object.defineProperty(PromiseIntrinsic.prototype, 'finally', {
@@ -69,13 +83,7 @@ function PromiseResolve(C, x) {
 	return get_slot(promiseCapability, '[[Promise]]');
 }
 
-function CreateThenFinally(C, onFinally) {
-	assert(IsConstructor(C));
-
-	if (IsCallable(onFinally) !== true) {
-		return onFinally;
-	}
-
+function ThenFinallyFunction() {
 	const ThenFinally = (value) => {
 		const onFinally = get_slot(ThenFinally, 'OnFinally');
 		assert(IsCallable(onFinally));
@@ -94,19 +102,11 @@ function CreateThenFinally(C, onFinally) {
 		'OnFinally',
 		'Constructor',
 	]);
-	set_slot(ThenFinally, 'OnFinally', onFinally);
-	set_slot(ThenFinally, 'Constructor', C);
 
 	return ThenFinally;
 }
 
-function CreateCatchFinally(C, onFinally) {
-	assert(IsConstructor(C));
-
-	if (IsCallable(onFinally) !== true) {
-		return onFinally;
-	}
-
+function CatchFinallyFunction() {
 	const CatchFinally = (reason) => {
 		const onFinally = get_slot(CatchFinally, 'OnFinally');
 		assert(IsCallable(onFinally));
@@ -125,8 +125,6 @@ function CreateCatchFinally(C, onFinally) {
 		'OnFinally',
 		'Constructor',
 	]);
-	set_slot(CatchFinally, 'OnFinally', onFinally);
-	set_slot(CatchFinally, 'Constructor', C);
 
 	return CatchFinally;
 }

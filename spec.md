@@ -3,22 +3,18 @@
 When the `finally` method is called with argument _onFinally_, the following steps are taken:
   1. Let _promise_ be the **this** value.
   1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ispromise">IsPromise</a>(_promise_) is **false**, throw a **TypeError** exception.
-  1. Let _thenFinally_ be ! CreateThenFinally(_onFinally_).
-  1. Let _catchFinally_ be ! CreateCatchFinally(_onFinally_).
+  1. Assert: <a href="https://tc39.github.io/ecma262/#sec-isconstructor">IsConstructor</a>(_C_) is *true*.
+    1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not *true*,
+      1. Let _thenFinally_ be _onFinally_.
+      1. Let _catchFinally_ be _onFinally_.
+    1. Else,
+      1. Let _thenFinally_ be a new built-in function object as defined in <a href="#sec-thenfinallyfunction">ThenFinally Function</a>.
+      1. Let _catchFinally_ be a new built-in function object as defined in <a href="#sec-catchfinallyfunction">CatchFinally Function</a>.
+      1. Set _thenFinally_ and _catchFinally_'s [[Constructor]] internal slots to _C_.
+      1. Set _thenFinally_ and _catchFinally_'s [[OnFinally]] internal slots to _onFinally_.
   1. Return ? <a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a>(_promise_, *"then"*, &laquo; _thenFinally_, _catchFinally_ &raquo;).
 
-## CreateThenFinally ( _onFinally_ )
-
-The abstract operation CreateThenFinally takes a Promise Constructor _C_, and an _onFinally_ function, and returns a callback function for use in `Promise.prototype.finally`.
-
-  1. Assert: IsConstructor(_C_) is *true*.
-  1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not *true*, return _onFinally_.
-  1. Let _thenFinally_ be a new built-in function object as defined in ThenFinally Function.
-  1. Set _thenFinally_.[[Constructor]] to _C_.
-  1. Set _thenFinally_.[[OnFinally]] to _onFinally_.
-  1. Return _thenFinally_.
-
-## ThenFinally Function
+### ThenFinally Function
 
 A ThenFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a `Promise`-like constructor function object, and the value of the [[OnFinally]] internal slot is a function object.
 
@@ -32,15 +28,19 @@ When a ThenFinally function _F_ is called with argument _value_, the following s
   1. Let _valueThunk_ be equivalent to a function that returns _value_.
   1. Return ? Invoke(_promise_, `"then"`, &laquo; _valueThunk_, *undefined* &raquo;).
 
-## CreateCatchFinally ( _onFinally_ )
+### CatchFinally Function
 
-The abstract operation CreateCatchFinally takes a `Promise`-like constructor function _C_, and an _onFinally_ function, and returns a callback function for use in Promise.prototype.finally.
+A CatchFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a `Promise`-like constructor function object, and the value of the [[OnFinally]] internal slot is a function object.
+
+When a CatchFinally function _F_ is called with argument _reason_, the following steps are taken:
+  1. Let _onFinally_ be _F_.[[OnFinally]].
+  1. Assert: <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is *true*.
+  1. Let _result_ be ? Call(_onFinally_, *undefined*).
+  1. Let _C_ be _F_.[[Constructor]].
   1. Assert: IsConstructor(_C_) is *true*.
-  1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not *true*, return _onFinally_.
-  1. Let _catchFinally_ be a new built-in function object as defined in CatchFinally Function.
-  1. Set _catchFinally_.[[Constructor]] to _C_.
-  1. Set _catchFinally_.[[onFinally]] to _onFinally_.
-  1. Return _catchFinally_.
+  1. Let _promise_ be ! PromiseResolve(_C_, _result_).
+  1. Let _thrower_ be equivalent to a function that throws _reason_.
+  1. Return ? Invoke(_promise_, `"then"`, &laquo; _valueThunk_, *undefined* &raquo;).
 
 ## Promise.resolve ( _x_ )
 
