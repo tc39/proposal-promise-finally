@@ -24,7 +24,7 @@ When a ThenFinally function _F_ is called with argument _value_, the following s
   1. Let _result_ be ? Call(_onFinally_).
   1. Let _C_ be _F_.[[Constructor]].
   1. Assert: IsConstructor(_C_) is *true*.
-  1. Let _promise_ be ! PromiseResolve(_C_, _result_).
+  1. Let _promise_ be ? PromiseResolve(_C_, _result_).
   1. Let _valueThunk_ be equivalent to a function that returns _value_.
   1. Return ? Invoke(_promise_, `"then"`, &laquo; _valueThunk_ &raquo;).
 
@@ -38,7 +38,7 @@ When a CatchFinally function _F_ is called with argument _reason_, the following
   1. Let _result_ be ? Call(_onFinally_).
   1. Let _C_ be _F_.[[Constructor]].
   1. Assert: IsConstructor(_C_) is *true*.
-  1. Let _promise_ be ! PromiseResolve(_C_, _result_).
+  1. Let _promise_ be ? PromiseResolve(_C_, _result_).
   1. Let _thrower_ be equivalent to a function that throws _reason_.
   1. Return ? Invoke(_promise_, `"then"`, &laquo; _valueThunk_ &raquo;).
 
