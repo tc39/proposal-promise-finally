@@ -35,12 +35,12 @@ contributors: Jordan Harband
 		<emu-alg>
 			1. Let _onFinally_ be _F_.[[OnFinally]].
 			1. Assert: IsCallable(_onFinally_) is *true*.
-			1. Let _result_ be ? Call(_onFinally_, *undefined*).
+			1. Let _result_ be ? Call(_onFinally_).
 			1. Let _C_ be _F_.[[Constructor]].
 			1. Assert: IsConstructor(_C_) is *true*.
 			1. Let _promise_ be ! PromiseResolve(_C_, _result_).
 			1. Let _valueThunk_ be equivalent to a function that returns _value_.
-			1. Return ? Invoke(_promise_, `"then"`, &laquo; _valueThunk_, *undefined* &raquo;).
+			1. Return ? Invoke(_promise_, `"then"`, &laquo; _valueThunk_ &raquo;).
 		</emu-alg>
 	</emu-clause>
 
@@ -51,12 +51,12 @@ contributors: Jordan Harband
 		<emu-alg>
 			1. Let _onFinally_ be _F_.[[OnFinally]].
 			1. Assert: IsCallable(_onFinally_) is *true*.
-			1. Let _result_ be ? Call(_onFinally_, *undefined*).
+			1. Let _result_ be ? Call(_onFinally_).
 			1. Let _C_ be _F_.[[Constructor]].
 			1. Assert: IsConstructor(_C_) is *true*.
 			1. Let _promise_ be ! PromiseResolve(_C_, _result_).
 			1. Let _thrower_ be equivalent to a function that throws _reason_.
-			1. Return ? Invoke(_promise_, `"then"`, &laquo; _thrower_, *undefined* &raquo;).
+			1. Return ? Invoke(_promise_, `"then"`, &laquo; _thrower_ &raquo;).
 		</emu-alg>
 	</emu-clause>
 </emu-clause>

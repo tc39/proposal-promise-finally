@@ -2197,8 +2197,7 @@
 							<emu-xref aoid="IsCallable" id="_ref_7"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
 							<emu-val>true</emu-val>.</li>
 						<li>Let <var>result</var> be ?
-							<emu-xref aoid="Call" id="_ref_8"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>onFinally</var>,
-							<emu-val>undefined</emu-val>).</li>
+							<emu-xref aoid="Call" id="_ref_8"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>onFinally</var>).</li>
 						<li>Let <var>C</var> be <var>F</var>.[[Constructor]].</li>
 						<li>Assert:
 							<emu-xref aoid="IsConstructor" id="_ref_9"><a href="https://tc39.github.io/ecma262/#sec-isconstructor">IsConstructor</a></emu-xref>(<var>C</var>) is
@@ -2207,8 +2206,7 @@
 							<emu-xref aoid="PromiseResolve" id="_ref_10"><a href="#sec-promise-resolve">PromiseResolve</a></emu-xref>(<var>C</var>, <var>result</var>).</li>
 						<li>Let <var>valueThunk</var> be equivalent to a function that returns <var>value</var>.</li>
 						<li>Return ?
-							<emu-xref aoid="Invoke" id="_ref_11"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>promise</var>, <code>"then"</code>, « <var>valueThunk</var>,
-							<emu-val>undefined</emu-val> »).
+							<emu-xref aoid="Invoke" id="_ref_11"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>promise</var>, <code>"then"</code>, « <var>valueThunk</var> »).
 						</li>
 					</ol>
 				</emu-alg>
@@ -2225,8 +2223,7 @@
 							<emu-xref aoid="IsCallable" id="_ref_12"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
 							<emu-val>true</emu-val>.</li>
 						<li>Let <var>result</var> be ?
-							<emu-xref aoid="Call" id="_ref_13"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>onFinally</var>,
-							<emu-val>undefined</emu-val>).</li>
+							<emu-xref aoid="Call" id="_ref_13"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>onFinally</var>).</li>
 						<li>Let <var>C</var> be <var>F</var>.[[Constructor]].</li>
 						<li>Assert:
 							<emu-xref aoid="IsConstructor" id="_ref_14"><a href="https://tc39.github.io/ecma262/#sec-isconstructor">IsConstructor</a></emu-xref>(<var>C</var>) is
@@ -2235,8 +2232,7 @@
 							<emu-xref aoid="PromiseResolve" id="_ref_15"><a href="#sec-promise-resolve">PromiseResolve</a></emu-xref>(<var>C</var>, <var>result</var>).</li>
 						<li>Let <var>thrower</var> be equivalent to a function that throws <var>reason</var>.</li>
 						<li>Return ?
-							<emu-xref aoid="Invoke" id="_ref_16"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>promise</var>, <code>"then"</code>, « <var>thrower</var>,
-							<emu-val>undefined</emu-val> »).
+							<emu-xref aoid="Invoke" id="_ref_16"><a href="https://tc39.github.io/ecma262/#sec-invoke">Invoke</a></emu-xref>(<var>promise</var>, <code>"then"</code>, « <var>thrower</var> »).
 						</li>
 					</ol>
 				</emu-alg>
