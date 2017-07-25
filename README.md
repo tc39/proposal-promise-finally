@@ -1,7 +1,9 @@
-# Promise.prototype.finally
+# [Promise.prototype.finally](https://www.npmjs.com/package/promise.prototype.finally)
 ECMAScript Proposal, specs, and reference implementation for `Promise.prototype.finally`
 
 Spec drafted by [@ljharb](https://github.com/ljharb), following the lead from the [cancelable promise proposal](https://github.com/domenic/cancelable-promise/blob/master/Third%20State.md#promiseprototypefinally-implementation).
+
+Get the polyfill/shim on [npm](https://www.npmjs.com/package/promise.prototype.finally).
 
 This proposal is currently [stage 3](https://github.com/tc39/proposals/blob/master/README.md) of the [process](https://tc39.github.io/process-document/).
 
