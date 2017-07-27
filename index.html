@@ -2142,7 +2142,7 @@
 		</div>
 	</div>
 	<div id="spec-container">
-		<h1 class="version first">Stage 3 Draft / July 25, 2017</h1>
+		<h1 class="version first">Stage 3 Draft / July 27, 2017</h1>
 		<h1 class="title">Promise.prototype.finally</h1>
 
 		<emu-clause id="sec-promise.prototype.finally">
@@ -2215,7 +2215,7 @@
 			<emu-clause id="sec-catchfinallyfunction" aoid="CatchFinallyFunction">
 				<h1><span class="secnum">1.2</span>CatchFinally Function</h1>
 				<p>A CatchFinally function is an anonymous built-in function that has a [[Constructor]] and an [[OnFinally]] internal slot. The value of the [[Constructor]] internal slot is a <code>Promise</code>-like constructor function object, and the value of the [[OnFinally]] internal slot is a function object.</p>
-				<p>When a CatchFinally function <var>F</var> is called with argument <var>value</var>, the following steps are taken:</p>
+				<p>When a CatchFinally function <var>F</var> is called with argument <var>reason</var>, the following steps are taken:</p>
 				<emu-alg>
 					<ol>
 						<li>Let <var>onFinally</var> be <var>F</var>.[[OnFinally]].</li>
