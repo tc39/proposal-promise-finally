@@ -81,7 +81,7 @@
 			"number": "3",
 			"namespace": "<no location>",
 			"location": "",
-			"referencingIds": ["_ref_10", "_ref_15", "_ref_21"],
+			"referencingIds": ["_ref_10", "_ref_15", "_ref_18"],
 			"key": "PromiseResolve ( C, x )"
 		}, {
 			"type": "clause",
@@ -2142,7 +2142,7 @@
 		</div>
 	</div>
 	<div id="spec-container">
-		<h1 class="version first">Stage 3 Draft / July 27, 2017</h1>
+		<h1 class="version first">Stage 3 Draft / August 25, 2017</h1>
 		<h1 class="title">Promise.prototype.finally</h1>
 
 		<emu-clause id="sec-promise.prototype.finally">
@@ -2250,19 +2250,8 @@
 					<li>If
 						<emu-xref aoid="Type" id="_ref_17"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>C</var>) is not Object, throw a
 						<emu-val>TypeError</emu-val> exception.</li>
-					<li>If
-						<emu-xref aoid="IsPromise" id="_ref_18"><a href="https://tc39.github.io/ecma262/#sec-ispromise">IsPromise</a></emu-xref>(<var>x</var>) is
-						<emu-val>true</emu-val>, then
-						<ol>
-							<li>Let <var>xConstructor</var> be ?
-								<emu-xref aoid="Get" id="_ref_19"><a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a></emu-xref>(<var>x</var>, <code>"constructor"</code>).</li>
-							<li>If
-								<emu-xref aoid="SameValue" id="_ref_20"><a href="https://tc39.github.io/ecma262/#sec-samevalue">SameValue</a></emu-xref>(<var>xConstructor</var>, <var>C</var>) is
-								<emu-val>true</emu-val>, return <var>x</var>.</li>
-						</ol>
-					</li>
 					<li>Return ?
-						<emu-xref aoid="PromiseResolve" id="_ref_21"><a href="#sec-promise-resolve">PromiseResolve</a></emu-xref>(<var>C</var>, <var>x</var>).
+						<emu-xref aoid="PromiseResolve" id="_ref_18"><a href="#sec-promise-resolve">PromiseResolve</a></emu-xref>(<var>C</var>, <var>x</var>).
 					</li>
 				</ol>
 			</emu-alg>
@@ -2280,7 +2269,18 @@
 			<emu-alg>
 				<ol>
 					<li>Assert:
-						<emu-xref aoid="Type" id="_ref_22"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>C</var>) is Object.</li>
+						<emu-xref aoid="Type" id="_ref_19"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>C</var>) is Object.</li>
+					<li>If
+						<emu-xref aoid="IsPromise" id="_ref_20"><a href="https://tc39.github.io/ecma262/#sec-ispromise">IsPromise</a></emu-xref>(<var>x</var>) is
+						<emu-val>true</emu-val>, then
+						<ol>
+							<li>Let <var>xConstructor</var> be ?
+								<emu-xref aoid="Get" id="_ref_21"><a href="https://tc39.github.io/ecma262/#sec-get-o-p">Get</a></emu-xref>(<var>x</var>, <code>"constructor"</code>).</li>
+							<li>If
+								<emu-xref aoid="SameValue" id="_ref_22"><a href="https://tc39.github.io/ecma262/#sec-samevalue">SameValue</a></emu-xref>(<var>xConstructor</var>, <var>C</var>) is
+								<emu-val>true</emu-val>, return <var>x</var>.</li>
+						</ol>
+					</li>
 					<li>Let <var>promiseCapability</var> be ?
 						<emu-xref aoid="NewPromiseCapability" id="_ref_23"><a href="https://tc39.github.io/ecma262/#sec-newpromisecapability">NewPromiseCapability</a></emu-xref>(<var>C</var>).</li>
 					<li>Perform ?

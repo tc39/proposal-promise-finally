@@ -64,19 +64,19 @@ Object.assign(PromiseIntrinsic, {
 			throw new TypeError('Promise.all must be called on an object');
 		}
 
-		if (IsPromise(x) === true) {
-			const xConstructor = Get(x, 'constructor');
-			if (SameValue(xConstructor, C) === true) {
-				return x;
-			}
-		}
-
 		return PromiseResolve(C, x);
 	}
 });
 
 function PromiseResolve(C, x) {
 	assert(Type(C) === 'Object');
+
+	if (IsPromise(x) === true) {
+		const xConstructor = Get(x, 'constructor');
+		if (SameValue(xConstructor, C) === true) {
+			return x;
+		}
+	}
 
 	const promiseCapability = NewPromiseCapability(C);
 	Call(get_slot(promiseCapability, '[[Resolve]]'), undefined, [x]);

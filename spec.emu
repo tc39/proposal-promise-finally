@@ -68,9 +68,6 @@ contributors: Jordan Harband
 	<emu-alg>
 		1. Let _C_ be the *this* value.
 		1. If Type(_C_) is not Object, throw a *TypeError* exception.
-		1. If IsPromise(_x_) is *true*, then
-			1. Let _xConstructor_ be ? Get(_x_, `"constructor"`).
-			1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
 		1. Return ? PromiseResolve(_C_, _x_).
 	</emu-alg>
 	<emu-note>
@@ -83,6 +80,9 @@ contributors: Jordan Harband
 	<p>The abstract operation PromiseResolve, given a constructor and a value, returns a new promise resolved with that value.</p>
 	<emu-alg>
 		1. Assert: Type(_C_) is Object.
+		1. If IsPromise(_x_) is *true*, then
+			1. Let _xConstructor_ be ? Get(_x_, `"constructor"`).
+			1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
 		1. Let _promiseCapability_ be ? NewPromiseCapability(_C_).
 		1. Perform ? Call(_promiseCapability_.[[Resolve]], *undefined*, &laquo; _x_ &raquo;).
 		1. Return _promiseCapability_.[[Promise]].
