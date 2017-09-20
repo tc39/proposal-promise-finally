@@ -38,8 +38,8 @@
 	"devDependencies": {
 		"ecmarkup": "^3.12.0",
 		"in-publish": "^2.0.0",
-		"js-beautify": "^1.6.14",
-		"mocha": "^3.5.0",
+		"js-beautify": "^1.7.3",
+		"mocha": "^3.5.3",
 		"promises-aplus-tests": "^2.1.2"
 	}
 }
