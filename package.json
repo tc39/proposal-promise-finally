@@ -8,7 +8,8 @@
 		"test": "npm run tests-only",
 		"tests-only": "npm run test:aplus && npm run test:finally",
 		"test:aplus": "promises-aplus-tests test/adapter",
-		"test:finally": "mocha test/test"
+		"test:finally": "mocha test/test",
+        "test:finally:native": "node --harmony-promise-finally $(which _mocha) test/test"
 	},
 	"repository": {
 		"type": "git",

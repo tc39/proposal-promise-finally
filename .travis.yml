@@ -8,11 +8,15 @@ script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ -n "${POSTTEST-}" ]; then npm run posttest ; fi'
   - 'if [ -n "${COVERAGE-}" ]; then npm run coverage ; fi'
-  - 'if [ -n "${TEST-}" ]; then npm run tests-only ; fi'
+  - 'if [ -n "${TEST-}" ]; then npm run tests-only ; elif [ -n "${NATIVE-}" ]; then npm run test:finally:native; fi'
 sudo: false
 env:
   - TEST=true
 matrix:
   fast_finish: true
   include:
+    - node_js: "node"
+      env: TEST=true
+    - node_js: "8.5"
+      env: NATIVE=true
   allow_failures:

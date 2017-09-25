@@ -2,20 +2,25 @@
 
 var assert = require('assert');
 
-var P = require('./promise');
+var P = typeof Promise === 'function' && typeof Promise.prototype.finally === 'function' ? Promise : require('./promise');
 var adapter = require('./adapter');
 
 var someRejectionReason = { message: 'some rejection reason' };
 var anotherReason = { message: 'another rejection reason' };
 
 describe('mocha promise sanity check', () => {
-  it('passes with a resolved promise', () => {
-    return P.resolve(3);
-  });
+	it('passes with a resolved promise', () => {
+		return P.resolve(3);
+	});
 
-  it('passes with a rejected then resolved promise', () => {
-    return P.reject(someRejectionReason).catch(x => 'this should be resolved');
-  });
+	it('passes with a rejected then resolved promise', () => {
+		return P.reject(someRejectionReason).catch(x => 'this should be resolved');
+	});
+
+    var ifPromiseIt = P === Promise ? it : it.skip;
+	ifPromiseIt('is the native Promise', () => {
+		assert.equal(P, Promise);
+	});
 });
 
 describe('onFinally', () => {
@@ -200,7 +205,7 @@ describe('onFinally', () => {
 		});
 
 		specify('from rejected', () => {
-      const newReason = {};
+			const newReason = {};
 			return adapter.rejected(someRejectionReason)
 				.catch((e) => {
 					assert.strictEqual(e, someRejectionReason);
