@@ -40,7 +40,7 @@ When a CatchFinally function _F_ is called with argument _reason_, the following
   1. Assert: IsConstructor(_C_) is *true*.
   1. Let _promise_ be ? PromiseResolve(_C_, _result_).
   1. Let _thrower_ be equivalent to a function that throws _reason_.
-  1. Return ? Invoke(_promise_, `"then"`, &laquo; _valueThunk_ &raquo;).
+  1. Return ? Invoke(_promise_, `"then"`, &laquo; _thrower_ &raquo;).
 
 ## Promise.resolve ( _x_ )
 
