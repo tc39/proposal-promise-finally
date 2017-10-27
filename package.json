@@ -9,7 +9,7 @@
 		"tests-only": "npm run test:aplus && npm run test:finally",
 		"test:aplus": "promises-aplus-tests test/adapter",
 		"test:finally": "mocha test/test",
-        "test:finally:native": "node --harmony-promise-finally $(which _mocha) test/test"
+		"test:finally:native": "node --harmony-promise-finally $(which _mocha) test/test"
 	},
 	"repository": {
 		"type": "git",
@@ -39,7 +39,7 @@
 	"devDependencies": {
 		"ecmarkup": "^3.12.0",
 		"in-publish": "^2.0.0",
-		"js-beautify": "^1.7.3",
+		"js-beautify": "^1.7.4",
 		"mocha": "^3.5.3",
 		"promises-aplus-tests": "^2.1.2"
 	}
