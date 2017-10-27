@@ -2148,7 +2148,7 @@
 		</div>
 	</div>
 	<div id="spec-container">
-		<h1 class="version first">Stage 3 Draft / August 25, 2017</h1>
+		<h1 class="version first">Stage 3 Draft / October 27, 2017</h1>
 		<h1 class="title">Promise.prototype.finally</h1>
 
 		<emu-clause id="sec-promise.prototype.finally">
@@ -2203,7 +2203,8 @@
 							<emu-xref aoid="IsCallable" id="_ref_7"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
 							<emu-val>true</emu-val>.</li>
 						<li>Let <var>result</var> be ?
-							<emu-xref aoid="Call" id="_ref_8"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>onFinally</var>).</li>
+							<emu-xref aoid="Call" id="_ref_8"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>onFinally</var>,
+							<emu-val>undefined</emu-val>).</li>
 						<li>Let <var>C</var> be <var>F</var>.[[Constructor]].</li>
 						<li>Assert:
 							<emu-xref aoid="IsConstructor" id="_ref_9"><a href="https://tc39.github.io/ecma262/#sec-isconstructor">IsConstructor</a></emu-xref>(<var>C</var>) is
@@ -2229,7 +2230,8 @@
 							<emu-xref aoid="IsCallable" id="_ref_12"><a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a></emu-xref>(<var>onFinally</var>) is
 							<emu-val>true</emu-val>.</li>
 						<li>Let <var>result</var> be ?
-							<emu-xref aoid="Call" id="_ref_13"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>onFinally</var>).</li>
+							<emu-xref aoid="Call" id="_ref_13"><a href="https://tc39.github.io/ecma262/#sec-call">Call</a></emu-xref>(<var>onFinally</var>,
+							<emu-val>undefined</emu-val>).</li>
 						<li>Let <var>C</var> be <var>F</var>.[[Constructor]].</li>
 						<li>Assert:
 							<emu-xref aoid="IsConstructor" id="_ref_14"><a href="https://tc39.github.io/ecma262/#sec-isconstructor">IsConstructor</a></emu-xref>(<var>C</var>) is

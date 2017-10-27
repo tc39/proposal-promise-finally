@@ -21,7 +21,7 @@ A ThenFinally function is an anonymous built-in function that has a [[Constructo
 When a ThenFinally function _F_ is called with argument _value_, the following steps are taken:
   1. Let _onFinally_ be _F_.[[OnFinally]].
   1. Assert: <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is *true*.
-  1. Let _result_ be ? Call(_onFinally_).
+  1. Let _result_ be ? Call(_onFinally_, *undefined*).
   1. Let _C_ be _F_.[[Constructor]].
   1. Assert: IsConstructor(_C_) is *true*.
   1. Let _promise_ be ? PromiseResolve(_C_, _result_).
@@ -35,7 +35,7 @@ A CatchFinally function is an anonymous built-in function that has a [[Construct
 When a CatchFinally function _F_ is called with argument _reason_, the following steps are taken:
   1. Let _onFinally_ be _F_.[[OnFinally]].
   1. Assert: <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is *true*.
-  1. Let _result_ be ? Call(_onFinally_).
+  1. Let _result_ be ? Call(_onFinally_, *undefined*).
   1. Let _C_ be _F_.[[Constructor]].
   1. Assert: IsConstructor(_C_) is *true*.
   1. Let _promise_ be ? PromiseResolve(_C_, _result_).
