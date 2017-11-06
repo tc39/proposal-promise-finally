@@ -2,8 +2,7 @@ language: node_js
 node_js:
   - "node"
 before_install:
-  - 'if [ "${TRAVIS_NODE_VERSION}" != "0.9" ]; then case "$(npm --version)" in 1.*) npm install -g npm@1.4.28 ;; 2.*) npm install -g npm@2 ;; esac ; fi'
-  - 'if [ "${TRAVIS_NODE_VERSION}" != "0.6" ] && [ "${TRAVIS_NODE_VERSION}" != "0.9" ]; then npm install -g npm; fi'
+  - 'nvm install-latest-npm'
 script:
   - 'if [ -n "${LINT-}" ]; then npm run lint ; fi'
   - 'if [ -n "${POSTTEST-}" ]; then npm run posttest ; fi'
@@ -15,7 +14,7 @@ env:
 matrix:
   fast_finish: true
   include:
-    - node_js: "node"
+    - node_js: "lts/*"
       env: TEST=true
     - node_js: "8.5"
       env: NATIVE=true
