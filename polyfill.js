@@ -26,14 +26,17 @@ if (typeof Promise.prototype.finally !== 'function') {
 
 	var shim = {
 		finally(onFinally) {
+			var promise = this;
+			if (typeof promise !== 'object' || promise === null) {
+				throw new TypeError('"this" value is not an Object');
+			}
+			var C = speciesConstructor(promise, Promise); // throws if SpeciesConstructor throws
 			var handler = typeof onFinally === 'function' ? onFinally : () => {};
-			var C;
 			var newPromise = Promise.prototype.then.call(
-				this, // throw if IsPromise(this) is not true
+				promise,
 				x => new C(resolve => resolve(handler())).then(() => x),
 				e => new C(resolve => resolve(handler())).then(() => { throw e; })
 			);
-			C = speciesConstructor(this, Promise); // throws if SpeciesConstructor throws
 			return newPromise;
 		}
 	};

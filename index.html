@@ -2148,7 +2148,7 @@
 		</div>
 	</div>
 	<div id="spec-container">
-		<h1 class="version first">Stage 3 Draft / October 27, 2017</h1>
+		<h1 class="version first">Stage 3 Draft / October 30, 2017</h1>
 		<h1 class="title">Promise.prototype.finally</h1>
 
 		<emu-clause id="sec-promise.prototype.finally">
@@ -2159,8 +2159,7 @@
 					<li>Let <var>promise</var> be the
 						<emu-val>this</emu-val> value.</li>
 					<li>If
-						<emu-xref aoid="IsPromise" id="_ref_2"><a href="https://tc39.github.io/ecma262/#sec-ispromise">IsPromise</a></emu-xref>(<var>promise</var>) is
-						<emu-val>false</emu-val>, throw a
+						<emu-xref aoid="Type" id="_ref_2"><a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a></emu-xref>(<var>promise</var>) is not Object, throw a
 						<emu-val>TypeError</emu-val> exception.</li>
 					<li>Let <var>C</var> be ?
 						<emu-xref aoid="SpeciesConstructor" id="_ref_3"><a href="https://tc39.github.io/ecma262/#sec-speciesconstructor">SpeciesConstructor</a></emu-xref>(<var>promise</var>,

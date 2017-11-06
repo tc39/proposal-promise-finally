@@ -14,7 +14,7 @@ contributors: Jordan Harband
 	<p>When the `finally` method is called with argument _onFinally_, the following steps are taken:</p>
 	<emu-alg>
 		1. Let _promise_ be the *this* value.
-		1. If IsPromise(_promise_) is *false*, throw a *TypeError* exception.
+		1. If Type(_promise_) is not Object, throw a *TypeError* exception.
 		1. Let _C_ be ? SpeciesConstructor(_promise_, %Promise%).
 		1. Assert: IsConstructor(_C_) is *true*.
 		1. If IsCallable(_onFinally_) is not *true*,

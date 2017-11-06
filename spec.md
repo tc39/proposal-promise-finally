@@ -2,7 +2,7 @@
 
 When the `finally` method is called with argument _onFinally_, the following steps are taken:
   1. Let _promise_ be the **this** value.
-  1. If <a href="http://www.ecma-international.org/ecma-262/6.0/index.html#sec-ispromise">IsPromise</a>(_promise_) is **false**, throw a **TypeError** exception.
+  1. If <a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(_promise_) is not Object, throw a *TypeError* exception.
   1. Assert: <a href="https://tc39.github.io/ecma262/#sec-isconstructor">IsConstructor</a>(_C_) is *true*.
     1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not *true*,
       1. Let _thenFinally_ be _onFinally_.
@@ -46,14 +46,14 @@ When a CatchFinally function _F_ is called with argument _reason_, the following
 
 The `resolve` function returns either a new promise resolved with the passed argument, or the argument itself if the argument is a promise produced by this constructor.
   1. Let _C_ be the *this* value.
-  1. If <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-ecmascript-data-types-and-values">Type</a>(_C_) is not Object, throw a *TypeError* exception.
+  1. If <a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(_C_) is not Object, throw a *TypeError* exception.
   1. Return ? PromiseResolve(_C_, _x_).
 
 Note: the `resolve` function expects its *this* value to be a constructor function that supports the parameter conventions of the `Promise` constructor.
 
 ## PromiseResolve ( _C_, _x_ )
 The abstract operation PromiseResolve, given a constructor and a value, returns a new promise resolved with that value.
-  1. Assert: <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-ecmascript-data-types-and-values">Type</a>(_C_) is Object.
+  1. Assert: <a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(_C_) is Object.
   1. If <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-ispromise">IsPromise</a>(_x_) is *true*, then
     1. Let _xConstructor_ be ? <a href="http://www.ecma-international.org/ecma-262/6.0/#sec-get-o-p">Get</a>(_x_, `"constructor"`).
     1. If SameValue(_xConstructor_, _C_) is *true*, return _x_.
