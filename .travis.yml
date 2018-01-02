@@ -16,6 +16,10 @@ matrix:
   include:
     - node_js: "lts/*"
       env: TEST=true
+    - node_js: "9"
+      env: NATIVE=true
+    - node_js: "8"
+      env: NATIVE=true
     - node_js: "8.5"
       env: NATIVE=true
   allow_failures:
