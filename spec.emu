@@ -17,7 +17,7 @@ contributors: Jordan Harband
 		1. If Type(_promise_) is not Object, throw a *TypeError* exception.
 		1. Let _C_ be ? SpeciesConstructor(_promise_, %Promise%).
 		1. Assert: IsConstructor(_C_) is *true*.
-		1. If IsCallable(_onFinally_) is not *true*,
+		1. If IsCallable(_onFinally_) is *false*,
 			1. Let _thenFinally_ be _onFinally_.
 			1. Let _catchFinally_ be _onFinally_.
 		1. Else,

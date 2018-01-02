@@ -31,13 +31,14 @@ if (typeof Promise.prototype.finally !== 'function') {
 				throw new TypeError('"this" value is not an Object');
 			}
 			var C = speciesConstructor(promise, Promise); // throws if SpeciesConstructor throws
-			var handler = typeof onFinally === 'function' ? onFinally : () => {};
-			var newPromise = Promise.prototype.then.call(
+			if (typeof onFinally !== 'function') {
+				return Promise.prototype.then.call(promise, onFinally, onFinally);
+			}
+			return Promise.prototype.then.call(
 				promise,
-				x => new C(resolve => resolve(handler())).then(() => x),
-				e => new C(resolve => resolve(handler())).then(() => { throw e; })
+				x => new C(resolve => resolve(onFinally())).then(() => x),
+				e => new C(resolve => resolve(onFinally())).then(() => { throw e; })
 			);
-			return newPromise;
 		}
 	};
 	Object.defineProperty(Promise.prototype, 'finally', { configurable: true, writable: true, value: shim.finally });

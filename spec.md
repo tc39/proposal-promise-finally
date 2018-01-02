@@ -4,7 +4,7 @@ When the `finally` method is called with argument _onFinally_, the following ste
   1. Let _promise_ be the **this** value.
   1. If <a href="https://tc39.github.io/ecma262/#sec-ecmascript-data-types-and-values">Type</a>(_promise_) is not Object, throw a *TypeError* exception.
   1. Assert: <a href="https://tc39.github.io/ecma262/#sec-isconstructor">IsConstructor</a>(_C_) is *true*.
-    1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is not *true*,
+    1. If <a href="https://tc39.github.io/ecma262/#sec-iscallable">IsCallable</a>(_onFinally_) is *false*,
       1. Let _thenFinally_ be _onFinally_.
       1. Let _catchFinally_ be _onFinally_.
     1. Else,
