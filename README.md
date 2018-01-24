@@ -5,7 +5,7 @@ Spec drafted by [@ljharb](https://github.com/ljharb), following the lead from th
 
 Get the polyfill/shim on [npm](https://www.npmjs.com/package/promise.prototype.finally).
 
-This proposal is currently [stage 3](https://github.com/tc39/proposals/blob/master/README.md) of the [process](https://tc39.github.io/process-document/).
+This proposal is currently [stage 4](https://github.com/tc39/proposals/blob/master/finished-proposals.md) of the [process](https://tc39.github.io/process-document/).
 
 ## Rationale
 Many promise libraries have a "finally" method, for registering a callback to be invoked when a promise is settled (either fulfilled, or rejected). The essential use case here is cleanup - I want to hide the "loading" spinner on my AJAX request, or I want to close any file handles I’ve opened, or I want to log that an operation has completed regardless of whether it succeeded or not.
