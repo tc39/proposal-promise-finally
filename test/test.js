@@ -300,13 +300,13 @@ describe('onFinally', () => {
 					return new P((resolve, reject) => {
 						setTimeout(() => reject(4), 1e3);
 					});
-				}).then(function onFulfilled(x) {
-					clearTimeout(timeout);
-					assert.strictEqual(x, 3);
-					done();
-				}, function onRejected() {
+				}).then(function onFulfilled() {
 					clearTimeout(timeout);
 					done(new Error('should not be called'));
+				}, function onRejected(e) {
+					clearTimeout(timeout);
+					assert.strictEqual(e, 4);
+					done();
 				});
 		});
 
